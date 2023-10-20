@@ -177,7 +177,7 @@
                     </div>
                     <h5 class="font-semibold text-2xl ltr:text-right rtl:text-left dark:text-white-light">
                         3,192
-                        <span class="block text-sm font-normal">Total Orders</span>
+                        <span class="block text-sm font-normal">Test</span>
                     </h5>
                 </div>
                 <div x-ref="totalOrders" class="bg-transparent rounded-lg">
