@@ -335,6 +335,7 @@
                     </li>
                 </ul>
             </li>
+            <!--
             <li class="menu nav-item relative">
                 <a href="javascript:;" class="nav-link">
                     <div class="flex items-center">
@@ -358,6 +359,8 @@
                         </svg>
                     </div>
                 </a>
+
+                
                 <ul class="sub-menu">
                     <li>
                         <a href="/apps/chat.php">Chat</a>
@@ -405,6 +408,9 @@
                     </li>
                 </ul>
             </li>
+            -->
+
+
             <li class="menu nav-item relative">
                 <a href="javascript:;" class="nav-link">
                     <div class="flex items-center">

@@ -34,20 +34,24 @@
                     </button>
                     <ul x-cloak x-show="activeDropdown === 'dashboard'" x-collapse class="sub-menu text-gray-500">
                         <li>
-                            <a href="/">Sales</a>
+                            <a href="/">Mood Tracking</a>
                         </li>
                         <li>
-                            <a href="/analytics.php">Analytics</a>
+                            <a href="/analytics.php">Log Mood</a>
                         </li>
                         <li>
-                            <a href="/finance.php">Finance</a>
+                            <a href="/crypto.php">Set An Appointment</a>
                         </li>
                         <li>
-                            <a href="/crypto.php">Crypto</a>
+                            <a href="/finance.php">Log Symptoms</a>
+                        </li>
+                        <li>
+                            <a href="/crypto.php">Set An Appointment</a>
                         </li>
                     </ul>
                 </li>
 
+        <!--
                 <h2 class="py-3 px-7 flex items-center uppercase font-extrabold bg-white-light/30 dark:bg-dark dark:bg-opacity-[0.08] -mx-4 mb-1">
 
                     <svg class="w-4 h-5 flex-none hidden" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -55,6 +59,7 @@
                     </svg>
                     <span>Apps</span>
                 </h2>
+
 
                 <li class="nav-item">
                     <ul>
@@ -183,6 +188,8 @@
                     </ul>
                 </li>
 
+                
+
                 <h2 class="py-3 px-7 flex items-center uppercase font-extrabold bg-white-light/30 dark:bg-dark dark:bg-opacity-[0.08] -mx-4 mb-1">
 
                     <svg class="w-4 h-5 flex-none hidden" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -254,6 +261,8 @@
                         </li>
                     </ul>
                 </li>
+
+
 
                 <li class="menu nav-item">
                     <button type="button" class="nav-link group" :class="{'active' : activeDropdown === 'elements'}" @click="activeDropdown === 'elements' ? activeDropdown = null : activeDropdown = 'elements'">
@@ -328,6 +337,8 @@
                         </li>
                     </ul>
                 </li>
+
+
 
                 <li class="menu nav-item">
                     <a href="/charts.php" class="nav-link group">
@@ -706,6 +717,7 @@
                         </div>
                     </a>
                 </li>
+                -->
             </ul>
         </div>
     </nav>
