@@ -10,7 +10,7 @@
             <span>Sales</span>
         </li>
     </ul>
-
+    
     <div class="pt-5">
         <div class="grid xl:grid-cols-3 gap-6 mb-6">
             <div class="panel h-full xl:col-span-2">
@@ -1076,3 +1076,5 @@
     });
 </script>
 <?php include 'footer-main.php'; ?>
+
+
