@@ -1,21 +1,17 @@
 <?php
 $host = "localhost"; // Your MySQL server hostname
-$username = "your_username"; // Your MySQL username
-$password = "your_password"; // Your MySQL password
-$database = "your_database"; // Your MySQL database name
+$port = 3306;
+$username = "root"; // Your MySQL username
+$password = ""; // Your MySQL password
+$database = "mindtrackdatabase"; // Your MySQL database name
 
-try {
-    // Create a PDO connection
-    $pdo = new PDO("mysql:host=$host;dbname=$database", $username, $password);
+// Create a connection to the database
+$conn = new mysqli($host, $username, $password, $database, $port);
 
-    // Set PDO to throw exceptions on errors
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // You are now connected to the database. You can perform database operations here.
-
-    // Don't forget to close the connection when you're done.
-    $pdo = null;
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
+// Check if the connection was successful
+if ($conn->connect_error) {
+    die("Database connection failed: " . $conn->connect_error);
+} else {
+    echo "Database connection successful";
 }
 ?>
