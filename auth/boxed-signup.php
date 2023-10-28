@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($insertStmt) {
                 $insertStmt->bind_param("sss", $name, $email, $password);
                 if ($insertStmt->execute()) {
-                    echo '<script>window.location.replace("/auth/boxed-signin.php");</script>';
+                    echo '<script>window.location.replace("../index.php");</script>';
                     exit;
                 } else {
                     $errors[] = "Registration failed: " . $conn->error;
@@ -104,7 +104,7 @@ $conn->close();
         </form>
  
     <br>
-        <p class="text-center">Already have an account? <a href="/auth/boxed-signin.php" class="text-primary font-bold hover:underline">Sign In</a></p>
+        <p class="text-center">Already have an account? <a href="../index.php" class="text-primary font-bold hover:underline">Sign In</a></p>
     </div>
 </div>
 
