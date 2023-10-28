@@ -1,41 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .error-box {
+            background-color: #ff0000;
+            color: #fff;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .error-input {
+            border: 2px solid #ff0000;
+        }
+    </style>
+</head>
+<body>
 <?php
-include 'header-main.php'; // Include the header
+session_start(); // Start the session
+include 'header-main-auth.php';
+include 'connect.php'; // Database connection file
 
-// Check if the user is logged in and has a user type in the session
-session_start();
-if (isset($_SESSION['user_id']) && isset($_SESSION['user_type'])) {
-    $userType = $_SESSION['user_type'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    // Display a welcome message based on the user type
-    if ($userType === 'admin') {
-        $welcomeMessage = "Welcome to Admin Dashboard";
-    } elseif ($userType === 'user') {
-        $welcomeMessage = "Welcome to User Dashboard";
+    // SQL query to retrieve user from the database using the provided email
+    $sql = "SELECT * FROM users WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    
+    if ($stmt) {
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            
+            // Verify the password
+            if (password_verify($password, $user['password'])) {
+                // Password matches, set user session and redirect based on role
+                $_SESSION['user_id'] = $user['id'];
+                
+                // Check user role and redirect accordingly
+                if ($user['usertype'] === 'admin') {
+                    header("Location: /admin/dashboard.php"); // Redirect admin to the admin dashboard
+                    exit;
+                } else {
+                    echo '<script>window.location.replace("dashboardUser/index.php");</script>';
+                    exit;
+                }
+            } else {
+                echo "Invalid email or password.";
+            }
+        } else {
+            echo "Invalid email or password.";
+        }
     } else {
-        $welcomeMessage = "Welcome to Dashboard";
+        echo "Login failed. Please try again.";
     }
-} else {
-    // If the user is not logged in or the user type is not set, you can handle it accordingly.
-    $welcomeMessage = "Welcome to Dashboard"; // Default message for unauthenticated users
+
+    $stmt->close();
 }
 
+$conn->close();
 ?>
-
-<script defer src="/assets/js/apexcharts.js"></script>
-<div x-data="sales">
-    <ul class="flex space-x-2 rtl:space-x-reverse">
-        <li>
-            <a href="javascript:;" class="text-primary hover:underline">Dashboard</a>
-        </li>
-        <li class="before:content-['/'] ltr:before:mr-1 rtl:before:ml-1">
-            <span><?php echo $welcomeMessage; ?></span>
-        </li>
-    </ul>
-    
-    <!-- Rest of your dashboard content -->
-
+<div class="flex justify-center items-center min-h-screen bg-[url('/assets/images/map.svg')] dark:bg-[url('/assets/images/map-dark.svg')] bg-cover bg-center">
+    <div class="panel sm:w-[480px] m-6 max-w-lg w-full">
+        <h2 class="font-bold text-2xl mb-3">Sign In</h2>
+        <p class="mb-7">Enter your email and password to login</p>
+        <form method="post" action="index.php" class="space-y-5" onsubmit="return validateForm()">
+            <div>
+                <label for="email">Email</label>
+                <input name="email" id="email" type="email" class="form-input" placeholder="Enter Email" />
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input name="password" id="password" type="password" class="form-input <?php if (isset($errors['password'])) echo 'error-input'; ?>" placeholder="Enter Password" />
+            </div>
+            <button type="submit" class="btn btn-primary w-full">SIGN IN</button>
+        </form>
+        <div class="relative my-7 h-5 text-center before:w-full before:h-[1px] before:absolute before:inset-0 before:m-auto before:bg-[#ebedf2] dark:before:bg-[#253b5c]">
+            <div class="font-bold text-white-dark bg-white dark:bg-[#0e1726] px-2 relative z-[1] inline-block"><span>OR</span></div>
+        </div>
+        <p class="text-center">Don't have an account? <a href="/auth/boxed-signup.php" class="text-primary font-bold hover:underline">Sign Up</a></p>
+    </div>
 </div>
 
-<?php include 'footer-main.php'; // Include the footer ?>
+<script>
+    function validateForm() {
+        let errorElements = document.querySelectorAll('.error-box');
+        errorElements.forEach(function (errorElement) {
+            errorElement.remove();
+        });
+        let errorInputs = document.querySelectorAll('.error-input');
+        errorInputs.forEach(function (errorInput) {
+            errorInput.classList.remove('error-input');
+        });
 
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+        let errors = {};
 
+        if (email.trim() === "") {
+            errors['email'] = "Email is required.";
+        } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+            errors['email'] = "Invalid email format.";
+        }
+
+        if (password.trim() === "") {
+            errors['password'] = "Password is required.";
+        }
+
+        if (Object.keys(errors).length > 0) {
+            for (let field in errors) {
+                let inputElement = document.getElementById(field);
+                inputElement.classList.add('error-input');
+                let errorBox = document.createElement('div');
+                errorBox.className = 'error-box';
+                errorBox.innerHTML = errors[field];
+                inputElement.parentElement.appendChild(errorBox);
+            }
+            return false;
+        }
+        return true;
+    }
+</script>
+
+<?php include 'footer-main-auth.php'; ?>
+</body>
+</html>
