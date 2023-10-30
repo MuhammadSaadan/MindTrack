@@ -1,5 +1,3 @@
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,9 +63,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($insertStmt) {
                 $insertStmt->bind_param("sss", $name, $email, $password);
                 if ($insertStmt->execute()) {
-                    echo '<script>showAlert();</script>';
-                    echo '<script>window.location.replace("../index.php");</script>';
-                    exit;
+                    if ($insertStmt->execute()) {
+                        echo 'Registration successful. '; // Debugging line
+                        echo '<script>console.log("Registration successful.");</script>'; // Debugging JavaScript
+                        echo '<script>showAlert();</script>';
+                        echo '<script>window.location.replace("../index.php");</script>';
+                        exit;
+                    }
                 } else {
                     $errors[] = "Registration failed: " . $conn->error;
                 }
@@ -112,6 +114,7 @@ $conn->close();
 </div>
 
 <script>
+    console.log('Script loaded');
     function validateForm() {
         let errorElements = document.querySelectorAll('.error-box');
         errorElements.forEach(function (errorElement) {
