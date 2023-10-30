@@ -1,22 +1,11 @@
 <?php
-include 'header-main.php'; // Include the header
-
 // Check if the user is logged in and has a user type in the session
 session_start();
+include 'header-main.php'; // Include the header
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_type'])) {
     $userType = $_SESSION['user_type'];
 
-    // Display a welcome message based on the user type
-    if ($userType === 'admin') {
-        $welcomeMessage = "Welcome to Admin Dashboard";
-    } elseif ($userType === 'user') {
-        $welcomeMessage = "Welcome to User Dashboard";
-    } else {
-        $welcomeMessage = "Welcome to Dashboard";
-    }
-} else {
-    // If the user is not logged in or the user type is not set, you can handle it accordingly.
-    $welcomeMessage = "Welcome to Dashboard"; // Default message for unauthenticated users
+    $welcomeMessage = "Welcome to Admin Dashboard"; 
 }
 
 ?>
@@ -36,6 +25,6 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_type'])) {
 
 </div>
 
-<?php include 'footer-main.php'; // Include the footer ?>
+<?php include '../footer-main.php'; // Include the footer ?>
 
 

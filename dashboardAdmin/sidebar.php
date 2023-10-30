@@ -34,22 +34,10 @@
                     </button>
                     <ul x-cloak x-show="activeDropdown === 'dashboard'" x-collapse class="sub-menu text-gray-500">
                         <li>
-                            <a href="/">Mood Tracking</a>
+                            <a href="/">Manage Users</a>
                         </li>
                         <li>
-                            <a href="/analytics.php">Log Mood</a>
-                        </li>
-                        <li>
-                            <a href="/crypto.php">Log Symptoms</a>
-                        </li>
-                        <li>
-                            <a href="/finance.php">Mental Haealth Self Test </a>
-                        </li>
-                        <li>
-                            <a href="/finance.php">Mental Health Information </a>
-                        </li>
-                        <li>
-                            <a href="/crypto.php">Set An Appointment</a>
+                            <a href="/analytics.php">Manage Appointments</a>
                         </li>
                     </ul>
                 </li>

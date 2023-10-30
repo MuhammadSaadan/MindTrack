@@ -19,47 +19,52 @@
 session_start(); // Start the session
 include 'header-main-auth.php';
 include 'connect.php'; // Database connection file
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // SQL query to retrieve user from the database using the provided email
-    $sql = "SELECT * FROM users WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    
-    if ($stmt) {
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    if (empty($email)) {
+        echo "Email is required.";
+    } elseif (empty($password)) {
+        echo "Password is required.";
+    } else {
+        // SQL query to retrieve user from the database using the provided email
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        
+        if ($stmt) {
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-        if ($result->num_rows > 0) {
-            $user = $result->fetch_assoc();
-            
-            // Verify the password
-            if (password_verify($password, $user['password'])) {
-                // Password matches, set user session and redirect based on role
-                $_SESSION['user_id'] = $user['id'];
+            if ($result->num_rows > 0) {
+                $user = $result->fetch_assoc();
                 
-                // Check user role and redirect accordingly
-                if ($user['usertype'] === 'admin') {
-                    header("Location: /admin/dashboard.php"); // Redirect admin to the admin dashboard
-                    exit;
+                // Verify the password
+                if (password_verify($password, $user['password'])) {
+                    // Password matches, set user session and redirect based on role
+                    $_SESSION['user_id'] = $user['id'];
+                    
+                    // Check user role and redirect accordingly
+                    if ($user['usertype'] === 'admin') {
+                        echo '<script>window.location.replace("dashboardAdmin/dashboard.php");</script>';
+                        exit;
+                    } else {
+                        echo '<script>window.location.replace("dashboardUser/dashboard.php");</script>';
+                        exit;
+                    }
                 } else {
-                    echo '<script>window.location.replace("dashboardUser/index.php");</script>';
-                    exit;
+                    echo '<div class="error-box">Invalid email or password.</div>';
                 }
             } else {
-                echo "Invalid email or password.";
+                echo '<div class="error-box">Invalid email or password.</div>';
             }
         } else {
-            echo "Invalid email or password.";
+            echo "Login failed. Please try again.";
         }
-    } else {
-        echo "Login failed. Please try again.";
-    }
 
-    $stmt->close();
+        $stmt->close();
+    }
 }
 
 $conn->close();

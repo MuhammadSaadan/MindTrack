@@ -1,3 +1,5 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($insertStmt) {
                 $insertStmt->bind_param("sss", $name, $email, $password);
                 if ($insertStmt->execute()) {
+                    echo '<script>showAlert();</script>';
                     echo '<script>window.location.replace("../index.php");</script>';
                     exit;
                 } else {
@@ -150,6 +153,16 @@ $conn->close();
             return false;
         }
         return true;
+    }
+
+    // Function to show success message
+    function showAlert() {
+        new window.Swal({
+            icon: 'success',
+            title: 'Registration Successful!',
+            text: 'You have successfully signed up.',
+            padding: '2em',
+        });
     }
 </script>
 
