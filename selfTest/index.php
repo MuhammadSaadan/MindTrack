@@ -1,7 +1,6 @@
 <?php
-session_start();
+require '../config.php';
 
-include '../connect.php'; // Include the connection file
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -54,7 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $stmt->close();
 
-    // Display success message or perform further actions after submission
     header("Location: /selfTest/result.php");
     exit();
 }
@@ -102,9 +100,7 @@ $conn->close();
 <div class="panel bg-gray-300">
 
 
-    <!-- justify pills -->
     <div class="mb-5" x-data="{tab : 'home'}">
-        <!-- buttons -->
         <div>
             <ul class="flex flex-wrap justify-between mt-3 space-x-2 rtl:space-x-reverse">
                 <li class="flex-auto text-center">
@@ -122,7 +118,6 @@ $conn->close();
             </ul>
         </div>
 
-        <!-- description -->
         <div class="pt-5 flex-1 text-sm">
             <template x-if="tab === 'home'">
                 <div>
