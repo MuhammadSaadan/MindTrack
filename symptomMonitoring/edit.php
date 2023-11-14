@@ -1,7 +1,6 @@
 <?php
-session_start();
+require '../config.php';
 
-include '../connect.php';
 
 
 

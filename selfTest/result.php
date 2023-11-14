@@ -1,15 +1,8 @@
 <?php
-session_start();
-include '../connect.php'; // Include the connection file
-
-// Check if the user is logged in or redirect to the login page if not
-if (!isset($_SESSION['user_id'])) {
-    header("Location: /path/to/login.php");
-    exit;
-}
+require '../config.php';
 
 
-// Retrieve form data from the session or the database (adjust as needed)
+// Retrieve form data from the session or the database 
 $user_id = $_SESSION['user_id'];
 $severity = $_SESSION['severity'];
 $comments = $_SESSION['comment'];

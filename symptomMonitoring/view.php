@@ -1,11 +1,10 @@
 <?php 
-session_start();
-include '../connect.php';
+require '../config.php';
+
 include '../header-main.php'; 
 
 ?>
 
-<!-- Include SimpleDataTables CSS -->
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
 
 <?php
@@ -124,7 +123,7 @@ $conn->close();
     foreach ($log_symptoms as $symptom) :
     ?>
     <tr id="row-<?= $symptom['log_id'] ?>">
-        <td><?= $currentNumber ?></td> <!-- Display the current row number -->
+        <td><?= $currentNumber ?></td> 
         <td><?= $symptom['symptom'] ?></td>
         <td><?= $symptom['description'] ?></td>
         <td><?= $symptom['rating'] ?></td>
@@ -132,8 +131,6 @@ $conn->close();
         <td class="p-3 border-b border-[#ebedf2] dark:border-[#191e3a] text-center">
             <div style="display: flex; gap: 10px;">
                 <a href="/symptomMonitoring/edit.php?edit_id=<?= $symptom['log_id'] ?>" class="btn btn-primary btn-sm mr-2">Edit</a>
-
-                <!-- Update the delete button to call the showAlert function -->
                 <button type="button" class="btn btn-danger btn-sm" onclick="showAlert(<?= $symptom['log_id'] ?>)">Delete</button>
             </div>
         </td>
@@ -149,7 +146,6 @@ $conn->close();
 
 <?php include '../footer-main.php'; ?>
 
-<!-- Include SimpleDataTables JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
 
 <script>
@@ -178,12 +174,9 @@ $conn->close();
         })
         .then((result) => {
             if (result.value) {
-                // Pass the logId to the PHP script for deletion
                 deleteLog(logId);
             } 
-            //else if (result.dismiss === window.Swal.DismissReason.cancel) {
-                //swalWithBootstrapButtons.fire('<div style="text-align: center;">Cancelled</div>');
-           // }
+         
         });
     }
 
@@ -198,16 +191,7 @@ $conn->close();
         });
 
         if (response.ok) {
-           // const swalWithBootstrapButtons = window.Swal.mixin({
-                //confirmButtonClass: 'btn btn-secondary',
-                //cancelButtonClass: 'btn btn-dark ltr:mr-3 rtl:ml-3',
-                //buttonsStyling: false,
-           
-
-            // If deletion was successful, display the success message
-                   //swalWithBootstrapButtons.fire('Mood Deleted');
-
-            // Reload the page after a short delay (e.g., 1.5 seconds)
+         
             setTimeout(() => {
                 window.location.reload();
             }, 1500); // Adjust the delay time as needed

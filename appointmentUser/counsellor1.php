@@ -1,66 +1,31 @@
 <?php
-session_start();
-include '../header-main.php';
-include '../connect.php';
+require '../config.php';
 
-$successMessage = '';
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $user_id = $_SESSION['user_id'];
     $name = $_POST['name'];
     $phone_number = $_POST['phone_number'];
     $date = $_POST['date'];
-    $time = $_POST['time'];
 
-    // Additional fields for dynamic values
-    $selectedCounsellor = 'Dr.Aishah Rahman';
-    $status = 'Pending';
-
-    // Perform basic validation
-    if (empty($user_id) || empty($name) || empty($phone_number) || empty($date) || empty($time)) {
+    if (empty($name) || empty($phone_number) || empty($date)) {
         echo "All fields are required.";
     } else {
-        // Prepared statement to prevent SQL injection
-        $sql = "INSERT INTO appointments (user_id, name, phone_number, counsellor, status, date, time) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
+        // Store data in session for use in the next page
+        $_SESSION['name'] = $name;
+        $_SESSION['phone_number'] = $phone_number;
+        $_SESSION['date'] = $date;
+        $_SESSION['selectedCounsellor'] = 'Dr.Aishah Rahman';
+        $_SESSION['status'] = 'Pending';
 
-        if ($stmt) {
-            $stmt->bind_param("issssss", $user_id, $name, $phone_number, $selectedCounsellor, $status, $date, $time);
-            if ($stmt->execute()) {
-                // Notification handling with SweetAlert2 in green color directly in JavaScript
-                echo "<script defer src='/assets/js/apexcharts.js'></script>";
-                echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@10'></script>";
-                echo "<script>
-                        coloredToast = () => {
-                            const toast = window.Swal.mixin({
-                                toast: true,
-                                position: 'bottom-start',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                showCloseButton: true,
-                                customClass: {
-                                    popup: 'background-color: #5cb85c; color: white; border-radius: 5px;' // Inline styles for green color
-                                }
-                            });
-                            toast.fire({
-                                title: 'Appointment Booked Successfully',
-                                icon: 'success'
-                            });
-                        };
-                        coloredToast();
-                    </script>";
-            } else {
-                echo "Error logging mood."; // Handle any errors in execution
-            }
-        } else {
-            echo "Prepared statement error."; // Handle any errors in prepared statement
-        }
-
-        $stmt->close(); // Close the prepared statement
-
-        $conn->close(); // Close the database connection
+        // Redirect to the next page
+        header("Location: counsellor2.php");
+        exit();
     }
 }
+
+include '../header-main.php';
+
 ?>
 
 <script defer src="/assets/js/apexcharts.js"></script>
@@ -105,32 +70,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="text-danger mt-2" id="startDateErr"></div>
                     </div>
 
-                    <div class="mb-5">
+                   
 
 
-                        <div>
-                            <label for="time">Time:</label>
-                            <select name="time" id="ctnSelect1" class="form-select text-white-dark" required>
-                                <option>10:00 AM</option>
-                                <option>11:00 AM</option>
-                                <option>12:00 PM</option>
-                                <option>1:00 PM</option>
-                                <option>2:00 PM</option>
-                                <option>3:00 PM</option>
-                                <option>4:00 PM</option>
-                                <option>5:00 PM</option>
-                                <option>6:00 PM</option>
-                            </select>
+                        <div style="display: flex; gap: 10px;">
+                            <button type="submit" class="btn btn-primary">Next</button>
+
                         </div>
-                    </div>
-
-
-
-                    <div style="display: flex; gap: 10px;">
-                        <!-- Your form fields -->
-                        <button type="submit" class="btn btn-primary">Book Appointment</button>
-
-                    </div>
 
 
                 </form>
@@ -138,11 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
     </div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-
 
 
     <?php include '../footer-main.php'; ?>

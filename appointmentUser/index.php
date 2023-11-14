@@ -1,9 +1,10 @@
 <?php
 
-session_start();
+require '../config.php';
+
 
 include '../header-main.php';
-include '../connect.php'; // Database connection file
+
 ?>
 
 <script defer src="/assets/js/apexcharts.js"></script>

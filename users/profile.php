@@ -1,19 +1,7 @@
 <?php
+require '../config.php';
 
-session_start(); // Start the session
-include '../connect.php';
-
-
-
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id']; // Get user ID from the session
-} else {
-    // Redirect if the user is not logged in
-    header("Location: ../index.php");
-    exit();
-}
-
-$userData = null; // Initialize $userData to null
+$userData = null;
 
 // Fetch user data from the database
 $userQuery = "SELECT * FROM users WHERE id = $user_id";
@@ -24,18 +12,16 @@ if ($result) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_profile'])) {
-    // Validate and sanitize user input
+    // Validate user input
     $name = htmlspecialchars($_POST['name']);
     $email = htmlspecialchars($_POST['email']);
-    $password = htmlspecialchars($_POST['password']); // Note: Storing plain passwords is not recommended; consider hashing them
+    $password = htmlspecialchars($_POST['password']);
 
-    // Use prepared statement for the update query
     $updateQuery = "UPDATE users SET name=?, email=?, password=? WHERE id = ?";
     $stmt = $conn->prepare($updateQuery);
     $stmt->bind_param("sssi", $name, $email, $password, $user_id);
     $stmt->execute();
 
-    // Redirect to the profile page after the update
     header("Location: /users/profile.php");
     exit();
 }
@@ -51,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
 
         if ($stmt->affected_rows > 0) {
             $_SESSION['deletion_success'] = true;
-            unset($_SESSION['update_success']); // Unset the update success session variable
+            unset($_SESSION['update_success']);
             header("Location: /auth/signout.php");
             exit();
         } else {
@@ -145,8 +131,8 @@ include '../header-main.php';
                 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" <h5>
 
                     <h5 class="text-lg font-bold mb-5">Delete Account</h5>
-                    <p class = "mb-5">Once you delete your account, there is no going back. Please be certain.</p>
-                    <div style="text-align: right;"> <!-- Wrapping container for alignment with inline style -->
+                    <p class="mb-5">Once you delete your account, there is no going back. Please be certain.</p>
+                    <div style="text-align: right;">
                         <button type="button" name="delete_id" class="btn btn-danger"
                             onclick="showAlert(<?php echo $userData['id']; ?>)">Delete
                             my account</button>
@@ -170,7 +156,6 @@ include '../header-main.php';
         swalWithBootstrapButtons
             .fire({
                 title: '<div style="text-align: center;">Are you sure?</div>',
-                // text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Delete',
@@ -180,12 +165,9 @@ include '../header-main.php';
             })
             .then((result) => {
                 if (result.value) {
-                    // Pass the logId to the PHP script for deletion
                     deleteLog(deleteUserId);
                 }
-                //else if (result.dismiss === window.Swal.DismissReason.cancel) {
-                //swalWithBootstrapButtons.fire('<div style="text-align: center;">Cancelled</div>');
-                // }
+
             });
     }
 
@@ -209,12 +191,10 @@ include '../header-main.php';
                 // If deletion was successful, display the success message
                 swalWithBootstrapButtons.fire('Account Deleted');
 
-                // Redirect to signout.php after a short delay (e.g., 1.5 seconds)
                 setTimeout(() => {
                     window.location.href = '/auth/signout.php';
-                }, 1500); // Adjust the delay time as needed
+                }, 1500); 
             } else {
-                // If deletion failed, display an error message
                 swalWithBootstrapButtons.fire('Error', 'Failed to delete account', 'error');
             }
         } catch (error) {

@@ -1,7 +1,9 @@
 <?php
-session_start();
+
+require '../config.php';
+
+
 include '../header-main.php';
-include '../connect.php'; // Include the connection file
 
 $successMessage = ''; // Initialize the success message
 

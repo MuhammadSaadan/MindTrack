@@ -74,7 +74,7 @@
         });
     </script>
 
-    <?php include 'theme-customizer.php'; ?>
+    <?php //include 'theme-customizer.php'; ?>
 
     <div class="main-container text-black dark:text-white-dark min-h-screen" :class="[$store.app.navbar]">
 

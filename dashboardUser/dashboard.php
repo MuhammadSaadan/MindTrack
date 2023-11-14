@@ -1,7 +1,9 @@
 <?php
-session_start();
+
+require '../config.php';
 include '../header-main.php';
-include '../connect.php'; // Include the connection file
+
+
 
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_type'])) {
     $userType = $_SESSION['user_type'];
@@ -55,86 +57,6 @@ $symptomResult = $conn->query($symptomQuery);
     </div>
 
     <br>
-
-
-
-    <div x-ref="moodPieChart" class="bg-white dark:bg-black rounded-lg">
-        <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Your Frequent Moods</p>
-        <div x-ref="moodPieChart" style="height: 300px;"></div>
-    </div>
-    <br>
-
-
-    <div class="bg-white dark:bg-black rounded-lg">
-        <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Your Frequent Symptoms</p>
-        <div x-ref="symptomPieChart" style="height: 300px;"></div>
-    </div>
-
-
-     <!-- scripts -->
-     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script>
-        document.addEventListener("alpine:init", () => {
-            Alpine.data("charts", () => ({
-                moodPieChart: null,
-                symptomPieChart: null,
-                moodChart: null,
-                activeTab: 1,
-                init() {
-                // Mood data
-                const moodData = <?php echo json_encode($moodResult->fetch_all(MYSQLI_ASSOC)); ?>;
-                const moodSeries = moodData.map(entry => entry.count);
-                const moodLabels = moodData.map(entry => entry.mood);
-
-                // Symptom data
-                const symptomData = <?php echo json_encode($symptomResult->fetch_all(MYSQLI_ASSOC)); ?>;
-                const symptomSeries = symptomData.map(entry => entry.count);
-                const symptomLabels = symptomData.map(entry => entry.symptom);
-
-                // Ensure the sum of series is 100
-                const normalizeData = (data) => {
-                    const sum = data.reduce((acc, val) => acc + val, 0);
-                    return data.map(val => (val / sum) * 100);
-                };
-
-                const normalizedMoodSeries = normalizeData(moodSeries);
-                const normalizedSymptomSeries = normalizeData(symptomSeries);
-
-                const moodPieOptions = {
-                    series: normalizedMoodSeries,
-                    chart: {
-                        type: 'pie',
-                        height: 530,
-                    },
-                    labels: moodLabels,
-                    colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
-                    legend: {
-                        position: 'bottom',
-                    }
-                };
-
-                this.moodPieChart = new ApexCharts(this.$refs.moodPieChart, moodPieOptions);
-                this.moodPieChart.render();
-
-                const symptomPieOptions = {
-                    series: normalizedSymptomSeries,
-                    chart: {
-                        type: 'pie',
-                        height: 530,
-                    },
-                    labels: symptomLabels,
-                    colors: ['#f94a9b', '#5f76e8', '#36a2ac', '#ff822b', '#e458a0'],
-                    legend: {
-                        position: 'bottom',
-                    }
-                };
-
-                this.symptomPieChart = new ApexCharts(this.$refs.symptomPieChart, symptomPieOptions);
-                this.symptomPieChart.render();
-            }
-        }));
-    });
-</script>
 
 
     <?php include '../footer-main.php'; ?>

@@ -1,7 +1,6 @@
 <?php
-session_start();
+require '../config.php';
 include '../header-main.php';
-include '../connect.php'; // Include the connection file
 
 $successMessage = ''; // Initialize the success message
 
@@ -60,7 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script defer src="/assets/js/apexcharts.js"></script>
 <div x-data="moodtracking">
-    <!-- arrowed -->
     <ol class="flex text-primary font-semibold dark:text-white-dark">
         <li class="bg-[#ebedf2] rounded-tl-md rounded-bl-md dark:bg-[#1b2e4b]"><a href="/dashboardUser/dashboard.php"
                 class="p-1.5 ltr:pl-3 rtl:pr-3 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70">Dashboard</a>
@@ -111,7 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     Very High</p>
 
                 <div style="display: flex; gap: 10px;" class="mt-6">
-                    <!-- Your form fields -->
                     <button type="submit" class="btn btn-primary">Log Mood</button>
                     <a href="/moodTracking/view.php" class="btn btn-secondary">View Logged Moods</a>
 

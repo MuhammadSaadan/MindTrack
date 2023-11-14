@@ -1,6 +1,5 @@
 <?php 
-session_start();
-include '../connect.php';
+require '../config.php';
 include '../header-main.php'; 
 
 ?>
@@ -124,7 +123,7 @@ $conn->close();
     foreach ($log_moods as $mood) :
     ?>
     <tr id="row-<?= $mood['log_id'] ?>">
-        <td><?= $currentNumber ?></td> <!-- Display the current row number -->
+        <td><?= $currentNumber ?></td> 
         <td><?= $mood['mood'] ?></td>
         <td><?= $mood['description'] ?></td>
         <td><?= $mood['rating'] ?></td>
@@ -133,7 +132,6 @@ $conn->close();
             <div style="display: flex; gap: 10px;">
                 <a href="/moodTracking/edit.php?edit_id=<?= $mood['log_id'] ?>" class="btn btn-primary btn-sm mr-2">Edit</a>
 
-                <!-- Update the delete button to call the showAlert function -->
                 <button type="button" class="btn btn-danger btn-sm" onclick="showAlert(<?= $mood['log_id'] ?>)">Delete</button>
             </div>
         </td>
@@ -149,7 +147,6 @@ $conn->close();
 
 <?php include '../footer-main.php'; ?>
 
-<!-- Include SimpleDataTables JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
 
 <script>
@@ -181,9 +178,7 @@ $conn->close();
                 // Pass the logId to the PHP script for deletion
                 deleteLog(logId);
             } 
-            //else if (result.dismiss === window.Swal.DismissReason.cancel) {
-                //swalWithBootstrapButtons.fire('<div style="text-align: center;">Cancelled</div>');
-           // }
+          
         });
     }
 
@@ -198,25 +193,15 @@ $conn->close();
         });
 
         if (response.ok) {
-           // const swalWithBootstrapButtons = window.Swal.mixin({
-                //confirmButtonClass: 'btn btn-secondary',
-                //cancelButtonClass: 'btn btn-dark ltr:mr-3 rtl:ml-3',
-                //buttonsStyling: false,
            
-
-            // If deletion was successful, display the success message
-                   //swalWithBootstrapButtons.fire('Mood Deleted');
-
-            // Reload the page after a short delay (e.g., 1.5 seconds)
             setTimeout(() => {
                 window.location.reload();
             }, 1500); // Adjust the delay time as needed
         } else {
-            // If deletion failed, display an error message
+            
             swalWithBootstrapButtons.fire('Error', 'Failed to delete', 'error');
         }
     } catch (error) {
-        // Handle any unexpected errors
         swalWithBootstrapButtons.fire('Error', 'An unexpected error occurred.', 'error');
     }
 }

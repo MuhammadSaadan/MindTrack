@@ -1,9 +1,5 @@
 <?php
-session_start();
-
-include '../connect.php';
-
-
+require '../config.php';
 
 $edit_id = $existing_mood = $existing_description = $existing_rating = ''; // Initializing variables
 
@@ -65,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 include '../header-main.php';
 ?>
 
-<!-- arrowed -->
 <ol class="flex text-primary font-semibold dark:text-white-dark">
     <li class="bg-[#ebedf2] rounded-tl-md rounded-bl-md dark:bg-[#1b2e4b]"><a href="/dashboardUser/dashboard.php" class="p-1.5 ltr:pl-3 rtl:pr-3 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70">Dashboard</a></li>
     <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"><a href="/moodTracking/index.php"class="p-1.5 px-3 ltr:pl-6 rtl:pr-6 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70">Mood Tracking</a></li>
@@ -76,7 +71,6 @@ include '../header-main.php';
 
 <div class="panel">
 
-<!-- Your HTML form to edit the mood entry -->
 <form method="post" action="/moodTracking/edit.php">
     <input type="hidden" name="edit_id" value="<?= $edit_id ?>">
     <label for="ctnSelect1">Choose your moods:</label>
