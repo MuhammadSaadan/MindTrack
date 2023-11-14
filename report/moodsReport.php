@@ -3,6 +3,7 @@ session_start();
 include '../header-main.php';
 include '../connect.php'; // Include the connection file
 
+
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_type'])) {
     $userType = $_SESSION['user_type'];
     $userName = 'User'; // Default name
@@ -20,15 +21,16 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_type'])) {
             }
         }
     }
+} else {
+    // Redirect if the user is not logged in
+    header("Location: ../index.php");
+    exit();
 }
 
 // Fetch mood data from the database
 $moodQuery = "SELECT mood, COUNT(*) as count FROM log_mood WHERE user_id = $userId GROUP BY mood";
 $moodResult = $conn->query($moodQuery);
 
-// Fetch symptom data from the database
-$symptomQuery = "SELECT symptom, COUNT(*) as count FROM log_symptoms WHERE user_id = $userId GROUP BY symptom";
-$symptomResult = $conn->query($symptomQuery);
 ?>
 
 <!-- arrowed -->
@@ -47,7 +49,8 @@ $symptomResult = $conn->query($symptomQuery);
             <?php echo $userName; ?>
         </h2>
         <hr class="my-4 dark:border-[#191e3a]">
-        <p class="lead my-5 text-center text-lg text-gray-600 dark:text-gray-400">Welcome To Mindtrack!</p>
+        <p class="lead my-5 text-center text-lg text-gray-600 dark:text-gray-400">Below are the stats for your mental
+            health.</p>
         <p class="lead">
             <button type="button" x-on:click="window.location.href='/mhealthInformation/info.php'"
                 class="btn btn-dark">Learn more...</button>
@@ -65,12 +68,6 @@ $symptomResult = $conn->query($symptomQuery);
     <br>
 
 
-    <div class="bg-white dark:bg-black rounded-lg">
-        <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Your Frequent Symptoms</p>
-        <div x-ref="symptomPieChart" style="height: 300px;"></div>
-    </div>
-
-
      <!-- scripts -->
      <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
@@ -86,11 +83,7 @@ $symptomResult = $conn->query($symptomQuery);
                 const moodSeries = moodData.map(entry => entry.count);
                 const moodLabels = moodData.map(entry => entry.mood);
 
-                // Symptom data
-                const symptomData = <?php echo json_encode($symptomResult->fetch_all(MYSQLI_ASSOC)); ?>;
-                const symptomSeries = symptomData.map(entry => entry.count);
-                const symptomLabels = symptomData.map(entry => entry.symptom);
-
+    
                 // Ensure the sum of series is 100
                 const normalizeData = (data) => {
                     const sum = data.reduce((acc, val) => acc + val, 0);
@@ -98,7 +91,6 @@ $symptomResult = $conn->query($symptomQuery);
                 };
 
                 const normalizedMoodSeries = normalizeData(moodSeries);
-                const normalizedSymptomSeries = normalizeData(symptomSeries);
 
                 const moodPieOptions = {
                     series: normalizedMoodSeries,
@@ -115,22 +107,6 @@ $symptomResult = $conn->query($symptomQuery);
 
                 this.moodPieChart = new ApexCharts(this.$refs.moodPieChart, moodPieOptions);
                 this.moodPieChart.render();
-
-                const symptomPieOptions = {
-                    series: normalizedSymptomSeries,
-                    chart: {
-                        type: 'pie',
-                        height: 530,
-                    },
-                    labels: symptomLabels,
-                    colors: ['#f94a9b', '#5f76e8', '#36a2ac', '#ff822b', '#e458a0'],
-                    legend: {
-                        position: 'bottom',
-                    }
-                };
-
-                this.symptomPieChart = new ApexCharts(this.$refs.symptomPieChart, symptomPieOptions);
-                this.symptomPieChart.render();
             }
         }));
     });

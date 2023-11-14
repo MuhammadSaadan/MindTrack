@@ -248,81 +248,6 @@ include '../header-main.php';
                         </div>
                     </div>
                 </div>
-                <template x-if="codeArr.includes('code2')">
-                    <pre class="code overflow-auto !bg-[#191e3a] p-4 rounded-md text-white">
-&lt;!-- without spacing --&gt;
-&lt;div class=&quot;mb-5&quot; x-data=&quot;{ active: 1 }&quot;&gt;
-    &lt;div class=&quot;border border-[#d3d3d3] dark:border-[#3b3f5c] rounded font-semibold&quot;&gt;
-        &lt;div class=&quot;border-b border-[#d3d3d3] dark:border-[#3b3f5c]&quot;&gt;
-            &lt;button type=&quot;button&quot; class=&quot;p-4 w-full flex items-center text-white-dark dark:bg-[#1b2e4b]&quot; :class=&quot;{'!text-primary' : active === 1}&quot; x-on:click=&quot;active === 1 ? active = null : active = 1&quot;&gt;Collapsible Group Item #1
-                &lt;div class=&quot;ltr:ml-auto rtl:mr-auto&quot; :class=&quot;{'rotate-180' : active === 1}&quot;&gt;
-                    &lt;svg&gt; ... &lt;/svg&gt;
-                &lt;/div&gt;
-            &lt;/button&gt;
-            &lt;div x-cloak x-show=&quot;active === 1&quot; x-collapse&gt;
-                &lt;div class=&quot;space-y-2 p-4 text-white-dark text-[13px]&quot;&gt;
-                    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&lt;/p&gt;
-                    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&lt;/p&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-
-        &lt;div class=&quot;border-b border-[#d3d3d3] dark:border-[#3b3f5c]&quot;&gt;
-            &lt;button type=&quot;button&quot; class=&quot;p-4 w-full flex items-center text-white-dark dark:bg-[#1b2e4b]&quot; :class=&quot;{'!text-primary' : active === 2}&quot; x-on:click=&quot;active === 2 ? active = null : active = 2&quot;&gt;Collapsible Group Item #2
-                &lt;div class=&quot;ltr:ml-auto rtl:mr-auto&quot; :class=&quot;{'rotate-180' : active === 2}&quot;&gt;
-                    &lt;svg&gt; ... &lt;/svg&gt;
-                &lt;/div&gt;
-            &lt;/button&gt;
-            &lt;div x-cloak x-show=&quot;active === 2&quot; x-collapse&gt;
-                &lt;div class=&quot;p-4 text-[13px]&quot;&gt;
-                    &lt;ul class=&quot;space-y-1&quot;&gt;
-                        &lt;li&gt;&lt;a href=&quot;javascript:;&quot;&gt;Apple&lt;/a&gt;&lt;/li&gt;
-                        &lt;li&gt;&lt;a href=&quot;javascript:;&quot;&gt;Orange&lt;/a&gt;&lt;/li&gt;
-                        &lt;li&gt;&lt;a href=&quot;javascript:;&quot;&gt;Banana&lt;/a&gt;&lt;/li&gt;
-                        &lt;li&gt;&lt;a href=&quot;javascript:;&quot;&gt;list&lt;/a&gt;&lt;/li&gt;
-                    &lt;/ul&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        
-        &lt;div&gt;
-            &lt;button type=&quot;button&quot; class=&quot;p-4 w-full flex items-center text-white-dark dark:bg-[#1b2e4b]&quot; :class=&quot;{'!text-primary' : active === 3}&quot; x-on:click=&quot;active === 3 ? active = null : active = 3&quot;&gt;Collapsible Group Item #3
-                &lt;div class=&quot;ltr:ml-auto rtl:mr-auto&quot; :class=&quot;{'rotate-180' : active === 3}&quot;&gt;
-                    &lt;svg&gt; ... &lt;/svg&gt;
-                &lt;/div&gt;
-            &lt;/button&gt;
-            &lt;div x-cloak x-show=&quot;active === 3&quot; x-collapse&gt;
-                &lt;div class=&quot;p-4 text-[13px]&quot;&gt;
-                    &lt;p&gt;Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.&lt;/p&gt;
-                    &lt;button type=&quot;button&quot; class=&quot;btn btn-primary mt-4&quot;&gt;Accept&lt;/button&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;!-- script --&gt;
-&lt;script&gt;
-    document.addEventListener(&quot;alpine:init&quot;, () =&gt; {
-        Alpine.data(&quot;collapse&quot;, () =&gt; ({
-            collapse: false,
-
-            collapseSidebar() {
-                this.collapse = !this.collapse;
-            },
-        }));
-
-        Alpine.data(&quot;dropdown&quot;, (initialOpenState = false) =&gt; ({
-            open: initialOpenState,
-
-            toggle() {
-                this.open = !this.open;
-            },
-        }));
-    });
-&lt;/script&gt;
-</pre>
-                </template>
             </div>
 
             <!-- Icons -->
@@ -650,4 +575,5 @@ include '../header-main.php';
         }));
     });
 </script>
+</div>
 <?php include '../footer-main.php'; ?>

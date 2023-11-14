@@ -16,7 +16,6 @@
 </head>
 <body>
 <?php
-include '../header-main-auth.php';
 include '../connect.php';
 
 $errors = [];
@@ -64,10 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $insertStmt->bind_param("sss", $name, $email, $password);
                 if ($insertStmt->execute()) {
                     if ($insertStmt->execute()) {
-                        echo 'Registration successful. '; // Debugging line
-                        echo '<script>console.log("Registration successful.");</script>'; // Debugging JavaScript
-                        echo '<script>showAlert();</script>';
-                        echo '<script>window.location.replace("../index.php");</script>';
+                        header("Location: ../index.php?updateSuccess=true");
                         exit;
                     }
                 } else {
@@ -82,6 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $conn->close();
+
+include '../header-main-auth.php';
+
 ?>
 <div class="flex justify-center items-center min-h-screen bg-[url('/assets/images/map.svg')] dark:bg-[url('/assets/images/map-dark.svg')] bg-cover bg-center">
     <div class="panel sm:w-[480px] m-6 max-w-lg w-full">
