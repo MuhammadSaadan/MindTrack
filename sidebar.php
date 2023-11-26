@@ -64,7 +64,7 @@
                         <li>
                             <a href="/appointmentUser/index.php">Appointment</a>
                         </li>
-                   
+
 
                     </ul>
 
@@ -100,13 +100,13 @@
                     </button>
                     <ul x-cloak x-show="activeDropdown === 'elements'" x-collapse class="sub-menu text-gray-500">
                         <li>
-                            <a href="/report/moodsReport.php">Moods Report</a>
+                            <a href="/reportMood/moodsReport.php">Moods Report</a>
                         </li>
                         <li>
-                            <a href="/report/symptomsReport.php">Symptoms Report</a>
+                            <a href="/reportSymptom/symptomsReport.php">Symptoms Report</a>
                         </li>
                         <li>
-                            <a href="/report/selftestReport.php">Self-Test Report</a>
+                            <a href="/reportSelftest/selftestReport.php">Self-Test Report</a>
                         </li>
 
                     </ul>
@@ -144,15 +144,19 @@
                     </button>
                     <ul x-cloak x-show="activeDropdown === 'components'" x-collapse class="sub-menu text-gray-500">
                         <li>
-                            <a href="/mhealthInformation/info.php">Learn More</a>
+                            <a href="/mhealthInformation/moods.php">Moods</a>
+                        </li>
+                        <li>
+                            <a href="/mhealthInformation/symptoms.php">Symptoms</a>
                         </li>
                         <li>
                             <a href="/mhealthInformation/list.php">Mental Disorders</a>
                         </li>
 
+
                     </ul>
-              
-               
+
+
             </ul>
         </div>
     </nav>

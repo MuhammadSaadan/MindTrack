@@ -1,62 +1,63 @@
 <?php
-require '../config.php';
+require '../config.php'; // Include your database connection code
+include '../header-main.php';
 
+// Function to get available time slots for a specific date
+function getAvailableTimeSlots($date, $conn) {
+    // Query to get all booked time slots for the selected date
+    $query = "SELECT time FROM appointments WHERE date = '$date'";
+    $result = mysqli_query($conn, $query);
 
-if (!isset($_SESSION['name']) || !isset($_SESSION['phone_number']) || !isset($_SESSION['date'])) {
-    // Redirect back to the first page if session data is not set
-    header("Location: counsellor1.php");
-    exit();
-}
+    if ($result) {
+        // Fetch booked time slots
+        $bookedTimeSlots = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $bookedTimeSlots[] = $row['time'];
+        }
 
+        // Define all possible time slots for the day
+        $allTimeSlots = ['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM'];
 
-// Retrieve the session data
-$name = $_SESSION['name'];
-$phone_number = $_SESSION['phone_number'];
-$date = $_SESSION['date'];
-$selectedCounsellor = $_SESSION['selectedCounsellor'];
-$status = $_SESSION['status'];
+        // Calculate available time slots
+        $availableTimeSlots = array_diff($allTimeSlots, $bookedTimeSlots);
 
-// Query the database for available time slots based on the selected date
-// You need to implement this part based on your database structure and business logic
-// ...
-
-// Example: Assuming you have an array of available time slots
-$availableTimeSlots = ["10:00 AM", "11:00 AM", "2:00 PM", "3:00 PM"];
-
-// ... (your existing code for session data cleanup)
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $selectedTime = $_POST['selected_time'];
-
-    if (empty($selectedTime)) {
-        echo "Please select a time slot.";
+        return $availableTimeSlots;
     } else {
-        // Insert the booking into the database
-        // You need to implement this part based on your database structure and business logic
-        // ...
-
-        // Display success message or handle errors
-        // ...
+        // Handle query error
+        die("Error: " . mysqli_error($conn));
     }
 }
 
-include '../header-main.php';
+// Check if the date is selected
+if (isset($_POST['submit'])) {
+    $selectedDate = $_POST['date'];
 
+    // Get available time slots for the selected date
+    $availableTimeSlots = getAvailableTimeSlots($selectedDate, $conn);
+}
 ?>
 
-<!-- Display available time slots and form for confirming booking -->
-<div class="flex justify-center items-center h-screen">
-    <div class="panel" style="width: 50rem;">
-        <form method="post" action="/appointmentUser/counsellor2.php" id="confirmBooking">
-            <!-- Display available time slots as buttons -->
-            <?php foreach ($availableTimeSlots as $timeSlot): ?>
-                <button type="submit" name="selected_time" value="<?= $timeSlot ?>"
-                        class="btn <?= in_array($timeSlot, $bookedTimeSlots) ? 'btn-danger' : 'btn-primary' ?>">
-                    <?= in_array($timeSlot, $bookedTimeSlots) ? 'Booked' : $timeSlot ?>
-                </button>
-            <?php endforeach; ?>
-        </form>
-    </div>
-</div>
+<!-- HTML form for selecting date -->
+<form method="post" action="">
+    <label for="date">Select Date:</label>
+    <input type="date" name="date" required>
+    <input type="submit" name="submit" value="Check Availability">
+</form>
+
+<!-- Display available time slots -->
+<?php
+if (isset($availableTimeSlots)) {
+    if (count($availableTimeSlots) > 0) {
+        echo "<h2>Available Time Slots for $selectedDate:</h2>";
+        echo "<ul>";
+        foreach ($availableTimeSlots as $timeSlot) {
+            echo "<li>$timeSlot</li>";
+        }
+        echo "</ul>";
+    } else {
+        echo "<h2>No available time slots for $selectedDate</h2>";
+    }
+}
+?>
 
 <?php include '../footer-main.php'; ?>

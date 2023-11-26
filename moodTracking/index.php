@@ -76,7 +76,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2 class="text-4xl md:text-5xl mb-4 mt-6 text-center dark:text-white-light">Track Your Mood</h2>
             <hr class="my-4 dark:border-[#191e3a]">
             <p class="text-center text-lg text-gray-600 dark:text-gray-400">Log how you feel today.</p>
-    
+            <p class="lead">
+                <button type="button" x-on:click="window.location.href='/reportMood/moodsReport.php'"
+                    class="btn btn-dark">View Moods Report</button>
+            </p>
         </div>
 
         <br>

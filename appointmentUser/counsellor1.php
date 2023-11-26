@@ -1,7 +1,7 @@
+
 <?php
+/*
 require '../config.php';
-
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
@@ -25,6 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 include '../header-main.php';
+
+
 
 ?>
 
@@ -87,3 +89,83 @@ include '../header-main.php';
 
 
     <?php include '../footer-main.php'; ?>
+    */
+
+   
+    require '../config.php'; // Include your database connection code
+    include '../header-main.php';
+    
+    // Function to get available time slots for a specific date
+    function getAvailableTimeSlots($date, $conn) {
+        // Query to get all booked time slots for the selected date
+        $query = "SELECT time FROM appointments WHERE date = '$date'";
+        $result = mysqli_query($conn, $query);
+    
+        if ($result) {
+            // Fetch booked time slots
+            $bookedTimeSlots = [];
+            while ($row = mysqli_fetch_assoc($result)) {
+                $bookedTimeSlots[] = $row['time'];
+            }
+    
+            // Define all possible time slots for the day
+            $allTimeSlots = ['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM'];
+    
+            // Calculate available time slots using strtotime for more reliable comparison
+            $availableTimeSlots = array_values(array_filter($allTimeSlots, function($timeSlot) use ($bookedTimeSlots) {
+                return !in_array($timeSlot, $bookedTimeSlots);
+            }));
+    
+            return $availableTimeSlots;
+        } else {
+            // Handle query error
+            die("Error: " . mysqli_error($conn));
+        }
+    }
+    
+    // Initialize available time slots array
+    $availableTimeSlots = [];
+    
+    // Check if the "Check Availability" button is clicked
+    if (isset($_POST['check_availability'])) {
+        $selectedDate = $_POST['date'];
+        $availableTimeSlots = getAvailableTimeSlots($selectedDate, $conn);
+    }
+    ?>
+    
+    <!-- HTML form for selecting date and checking availability -->
+    <form method="post" action="">
+        <label for="date">Select Date:</label>
+        <input type="date" name="date" required>
+    
+        <input type="submit" name="check_availability" value="Check Availability">
+    </form>
+    
+    <!-- Display available time slots -->
+    <?php
+    if (!empty($availableTimeSlots)) {
+        echo "<h2>Available Time Slots for $selectedDate:</h2>";
+        echo "<ul>";
+        foreach ($availableTimeSlots as $timeSlot) {
+            echo "<li>$timeSlot</li>";
+        }
+        echo "</ul>";
+    }
+    ?>
+    
+    <!-- HTML form for booking appointment -->
+    <form method="post" action="">
+        <label for="time">Select Time:</label>
+        <select name="time" required>
+            <?php
+            // Display available time slots for the selected date
+            foreach ($availableTimeSlots as $timeSlot) {
+                echo "<option value=\"$timeSlot\">$timeSlot</option>";
+            }
+            ?>
+        </select>
+        <input type="submit" name="submit" value="Book Appointment">
+    </form>
+    
+    <?php include '../footer-main.php'; ?>
+    
