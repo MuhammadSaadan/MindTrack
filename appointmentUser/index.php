@@ -30,6 +30,11 @@ include '../header-main.php';
             <hr class="my-4 dark:border-[#191e3a]">
             <p class="text-center text-lg text-gray-600 dark:text-gray-400"> Schedule a consultation with our seasoned
                 counselors</p>
+
+            <p class="lead">
+                <button type="button" x-on:click="window.location.href='/appointmentUser/view.php'"
+                    class="btn btn-dark">View Booked Appointments</button>
+            </p>
         </div>
     </div>
 

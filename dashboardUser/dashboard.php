@@ -66,16 +66,16 @@ $symptomResult = $conn->query($symptomQuery);
     <div>
         <ul class="flex flex-wrap justify-between mt-3 space-x-2 rtl:space-x-reverse">
             <li class="flex-auto text-center">
-                <a href="javascript:" class="p-3.5 py-2 -mb-[1px] block hover:bg-info rounded hover:text-white"
-                    :class="{'bg-info text-white' : tab === 'home'}" @click="tab = 'home'">Purpose</a>
+                <a href="javascript:" class="p-3.5 py-2 -mb-[1px] block hover:bg-primary rounded hover:text-white"
+                    :class="{'bg-primary text-white' : tab === 'home'}" @click="tab = 'home'">Purpose</a>
             </li>
             <li class="flex-auto text-center">
-                <a href="javascript:" class="p-3.5 py-2 -mb-[1px] block hover:bg-info rounded hover:text-white"
-                    :class="{'bg-info text-white' : tab === 'profile'}" @click="tab = 'aim'">Aim</a>
+                <a href="javascript:" class="p-3.5 py-2 -mb-[1px] block hover:bg-primary rounded hover:text-white"
+                    :class="{'bg-primary text-white' : tab === 'profile'}" @click="tab = 'aim'">Aim</a>
             </li>
             <li class="flex-auto text-center">
-                <a href="javascript:" class="p-3.5 py-2 -mb-[1px] block hover:bg-info rounded hover:text-white"
-                    :class="{'bg-info text-white' : tab === 'contact'}" @click="tab = 'objective'">Objective</a>
+                <a href="javascript:" class="p-3.5 py-2 -mb-[1px] block hover:bg-primary rounded hover:text-white"
+                    :class="{'bg-primary text-white' : tab === 'contact'}" @click="tab = 'objective'">Objective</a>
             </li>
         </ul>
     </div>

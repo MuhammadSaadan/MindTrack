@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         coloredToast = () => {
                             const toast = window.Swal.mixin({
                                 toast: true,
-                                position: 'bottom-start',
+                                position: 'top',
                                 showConfirmButton: false,
                                 timer: 3000,
                                 showCloseButton: true,

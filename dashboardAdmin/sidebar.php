@@ -34,10 +34,10 @@
                     </button>
                     <ul x-cloak x-show="activeDropdown === 'dashboard'" x-collapse class="sub-menu text-gray-500">
                         <li>
-                            <a href="/">Manage Users</a>
+                            <a href="/dashboardAdmin/manageUsers.php">Manage Users</a>
                         </li>
                         <li>
-                            <a href="/analytics.php">Manage Appointments</a>
+                            <a href="/appointmentAdmin/view.php">Manage Appointments</a>
                         </li>
                     </ul>
                 </li>

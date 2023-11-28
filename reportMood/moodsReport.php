@@ -113,7 +113,7 @@ if (isset($_SESSION['deletion_success']) && $_SESSION['deletion_success'] === tr
     <script>
         const toast = window.Swal.mixin({
             toast: true,
-            position: 'bottom-start',
+            position: 'top',
             showConfirmButton: false,
             timer: 3000,
             showCloseButton: true,
@@ -137,7 +137,7 @@ if (isset($_GET['updateSuccess']) && $_GET['updateSuccess'] == 'true') {
         const coloredToast = () => {
             const toast = window.Swal.mixin({
                 toast: true,
-                position: 'bottom-start',
+                position: 'top',
                 showConfirmButton: false,
                 timer: 3000,
                 showCloseButton: true,
@@ -185,7 +185,8 @@ include '../header-main.php';
             <?php echo $totalMoods; ?> Moods
         </h2>
         <hr class="my-4 dark:border-[#191e3a]">
-        <p class="lead my-5 text-center text-lg text-gray-600 dark:text-gray-400">Below are the stats for your logged moods</p>
+        <p class="lead my-5 text-center text-lg text-gray-600 dark:text-gray-400">Below are the stats for your logged
+            moods</p>
         <p class="lead">
             <button type="button" x-on:click="window.location.href='/mhealthInformation/moods.php'"
                 class="btn btn-dark">Learn more...</button>
@@ -209,7 +210,7 @@ include '../header-main.php';
                 <?php echo "Your overall mood is,"; ?>
             </h3>
             <h3 class="text-5xl font-semibold mb-4 text-white-light text-[5px] text-center">
-                <?php echo "{$highestFrequencyOverall['mood']}"; ?>
+                <?php echo isset($highestFrequencyOverall['mood']) ? $highestFrequencyOverall['mood'] : 'No data recorded'; ?>
             </h3>
             <p class="text-white-light text-[15px] mb-3.5 text-center"></p>
         </div>
@@ -226,7 +227,7 @@ include '../header-main.php';
                 You have been feeling,
             </h3>
             <h3 class="text-5xl font-semibold mb-4 text-white-light text-[5px] text-center">
-                <?php echo "{$highestFrequency7Days['mood']}"; ?>
+                <?php echo isset($highestFrequency7Days['mood']) ? $highestFrequency7Days['mood'] : 'No data recorded'; ?>
             </h3>
             <h3 class="text-2xl font-semibold mb-4 text-white-light text-[5px] text-center">
                 for the past week.
@@ -247,7 +248,7 @@ include '../header-main.php';
                 You have been feeling,
             </h3>
             <h3 class="text-5xl font-semibold mb-4 text-white-light text-[5px] text-center">
-                <?php echo "{$highestFrequency30Days['mood']}"; ?>
+                <?php echo isset($highestFrequency30Days['mood']) ? $highestFrequency30Days['mood'] : 'No data recorded'; ?>
             </h3>
             <h3 class="text-2xl font-semibold mb-4 text-white-light text-[5px] text-center">
                 for the past month.
@@ -256,12 +257,12 @@ include '../header-main.php';
         </div>
     </div>
     <br>
-    <!-- mood line chart -->
+    <!-- mood line chart 
     <div x-ref="lineChart" class="bg-white dark:bg-black rounded-lg">
         <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Your Mood Over Time</p>
         <div x-ref="lineChart" style="height: 300px;"></div>
     </div>
-
+-->
     <br>
 
     <div class="panel">
@@ -332,7 +333,6 @@ include '../header-main.php';
                 moodPieChart: null,
                 sevenDaysChart: null,
                 thirtyDaysChart: null,
-                lineChart: null,
                 init() {
                     let isDark;
 
@@ -426,34 +426,72 @@ include '../header-main.php';
                     this.thirtyDaysChart = new ApexCharts(this.$refs.thirtyDaysChart, thirtyDaysOptions);
                     this.thirtyDaysChart.render();
 
-                    // Line Chart data
-                    const lineChartLabels = uniqueMonths.map(month => month.toString());
-                    const lineChartSeries = lineChartData.map(entry => ({
-                        name: entry.name,
-                        data: entry.data,
-                    }));
 
-                    // Line Chart options
-                    const lineChartOptions = {
-                        series: lineChartSeries,
-                        chart: {
-                            height: 350,
-                            type: 'line',
-                            zoom: {
-                                enabled: false,
+                },
+            }));
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener("alpine:init", () => {
+            Alpine.data("chart", () => ({
+
+                init() {
+                    isDark = this.$store.app.theme === "dark" ? true : false;
+
+                    let lineChart = new ApexCharts(this.$refs.lineChart, this.lineChartOptions);
+                    lineChart.render();
+
+                get lineChartOptions() {
+                        return {
+                            chart: {
+                                height: 300,
+                                type: 'line',
+                                toolbar: false
                             },
-                        },
-                        xaxis: {
-                            categories: lineChartLabels,
-                        },
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
-                        legend: {
-                            position: 'top',
-                        },
-                    };
+                            colors: ['#4361ee'],
+                            tooltip: {
+                                marker: false,
+                                y: {
+                                    formatter(number) {
+                                        return '$' + number
+                                    }
+                                }
+                            },
+                            stroke: {
+                                width: 2,
+                                curve: 'smooth'
+                            },
+                            xaxis: {
+                                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June'],
+                                axisBorder: {
+                                    color: isDark ? '#191e3a' : '#e0e6ed'
+                                },
+                            },
+                            yaxis: {
+                                opposite: isRtl ? true : false,
+                                labels: {
+                                    offsetX: isRtl ? -20 : 0,
+                                }
+                            },
+                            series: [{
+                                name: 'Sales',
+                                data: [45, 55, 75, 25, 45, 110],
+                            }],
+                            grid: {
+                                borderColor: isDark ? '#191e3a' : '#e0e6ed',
+                            },
+                            tooltip: {
+                                theme: isDark ? 'dark' : 'light',
+                            }
+                        }
+                    },
 
-                    this.lineChart = new ApexCharts(this.$refs.lineChart, lineChartOptions);
-                    this.lineChart.render();
+                    this.$watch('$store.app.theme', () => {
+                        isDark = this.$store.app.theme === "dark" ? true : false;
+                        lineChart.updateOptions(this.lineChartOptions);
+                    })
                 },
             }));
         });

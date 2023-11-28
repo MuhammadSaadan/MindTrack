@@ -104,16 +104,16 @@ $conn->close();
         <div>
             <ul class="flex flex-wrap justify-between mt-3 space-x-2 rtl:space-x-reverse">
                 <li class="flex-auto text-center">
-                    <a href="javascript:" class="p-3.5 py-2 -mb-[1px] block hover:bg-info rounded hover:text-white"
-                        :class="{'bg-info text-white' : tab === 'home'}" @click="tab = 'home'">When to Use?</a>
+                    <a href="javascript:" class="p-3.5 py-2 -mb-[1px] block hover:bg-primary rounded hover:text-white"
+                        :class="{'bg-primary text-white' : tab === 'home'}" @click="tab = 'home'">When to Use?</a>
                 </li>
                 <li class="flex-auto text-center">
-                    <a href="javascript:" class="p-3.5 py-2 -mb-[1px] block hover:bg-info rounded hover:text-white"
-                        :class="{'bg-info text-white' : tab === 'profile'}" @click="tab = 'aim'">Pearls/Pitfalls</a>
+                    <a href="javascript:" class="p-3.5 py-2 -mb-[1px] block hover:bg-primary rounded hover:text-white"
+                        :class="{'bg-primary text-white' : tab === 'profile'}" @click="tab = 'aim'">Pearls/Pitfalls</a>
                 </li>
                 <li class="flex-auto text-center">
-                    <a href="javascript:" class="p-3.5 py-2 -mb-[1px] block hover:bg-info rounded hover:text-white"
-                        :class="{'bg-info text-white' : tab === 'contact'}" @click="tab = 'objective'">Why Use</a>
+                    <a href="javascript:" class="p-3.5 py-2 -mb-[1px] block hover:bg-primary rounded hover:text-white"
+                        :class="{'bg-primary text-white' : tab === 'contact'}" @click="tab = 'objective'">Why Use</a>
                 </li>
             </ul>
         </div>

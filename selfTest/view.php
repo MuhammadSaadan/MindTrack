@@ -45,7 +45,7 @@ if (isset($_SESSION['deletion_success']) && $_SESSION['deletion_success'] === tr
     <script>
         const toast = window.Swal.mixin({
             toast: true,
-            position: 'bottom-start',
+            position: 'top',
             showConfirmButton: false,
             timer: 3000,
             showCloseButton: true,
@@ -69,7 +69,7 @@ if (isset($_GET['updateSuccess']) && $_GET['updateSuccess'] == 'true') {
         const coloredToast = () => {
             const toast = window.Swal.mixin({
                 toast: true,
-                position: 'bottom-start',
+                position: 'top',
                 showConfirmButton: false,
                 timer: 3000,
                 showCloseButton: true,
