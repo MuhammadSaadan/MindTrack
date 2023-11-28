@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 14, 2023 at 07:12 PM
+-- Generation Time: Nov 28, 2023 at 06:08 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -30,8 +30,6 @@ SET time_zone = "+00:00";
 CREATE TABLE `appointments` (
   `id` int NOT NULL,
   `user_id` int DEFAULT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `phone_number` varchar(20) DEFAULT NULL,
   `counsellor` varchar(100) DEFAULT NULL,
   `status` varchar(100) DEFAULT NULL,
   `date` date DEFAULT NULL,
@@ -42,13 +40,12 @@ CREATE TABLE `appointments` (
 -- Dumping data for table `appointments`
 --
 
-INSERT INTO `appointments` (`id`, `user_id`, `name`, `phone_number`, `counsellor`, `status`, `date`, `time`) VALUES
-(23, 50, 'asdas', 'dsadasdsa', 'Dr.Aishah Rahman', 'Pending', '2023-11-14', '10:00 AM'),
-(24, 50, 'saadan123333', 'adsdads', 'Dr.Aishah Rahman', 'Pending', '2023-11-15', '10:00 AM'),
-(25, 50, 'saadan123333', 'adsdads', 'Dr.Aishah Rahman', 'Pending', '2023-11-15', '10:00 AM'),
-(26, 50, 'saadan123333', 'adsdads', 'Dr.Aishah Rahman', 'Pending', '2023-11-15', '10:00 AM'),
-(27, 50, 'dasdasd', 'asdsa', 'Dr.Aishah Rahman', 'Pending', '2023-11-15', '10:00 AM'),
-(28, 50, 'dasdasd', 'asdsa', 'Dr.Aishah Rahman', 'Pending', '2023-11-15', '10:00 AM');
+INSERT INTO `appointments` (`id`, `user_id`, `counsellor`, `status`, `date`, `time`) VALUES
+(1, 1, 'Dr. Aishah Rahman', 'Pending', '2023-11-28', '9:00 AM'),
+(2, 1, 'Dr. Aishah Rahman', 'Pending', '2023-11-28', '10:00 AM'),
+(3, 1, 'Dr. Aishah Rahman', 'Pending', '2023-11-29', '9:00 AM'),
+(4, 1, 'Dr. Aishah Rahman', 'Pending', '2023-11-29', '10:00 AM'),
+(5, 1, 'Dr. Aishah Rahman', 'Pending', '2023-11-28', '11:00 AM');
 
 -- --------------------------------------------------------
 
@@ -64,15 +61,6 @@ CREATE TABLE `log_mood` (
   `rating` int DEFAULT NULL,
   `logged_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `log_mood`
---
-
-INSERT INTO `log_mood` (`log_id`, `user_id`, `mood`, `description`, `rating`, `logged_at`) VALUES
-(4, 50, 'Angry', 'dfdsfdsfd', 3, '2023-11-13 17:46:29'),
-(5, 50, 'Anxious', 'adsdsad', 3, '2023-11-14 07:16:31'),
-(6, 50, 'Sad', 'a', 3, '2023-11-14 08:07:40');
 
 -- --------------------------------------------------------
 
@@ -113,13 +101,6 @@ CREATE TABLE `ph9_question` (
   `logged_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `ph9_question`
---
-
-INSERT INTO `ph9_question` (`id`, `user_id`, `severity`, `question_1`, `question_2`, `question_3`, `question_4`, `question_5`, `question_6`, `question_7`, `question_8`, `question_9`, `total`, `comment`, `logged_at`) VALUES
-(1, 50, 'Moderate', 3, 3, 2, 2, 3, 0, 0, 0, 0, 13, 'Use clinical judgment (symptom duration, functional impairment) to determine necessity of treatment', '2023-11-14 08:13:45');
-
 -- --------------------------------------------------------
 
 --
@@ -128,18 +109,21 @@ INSERT INTO `ph9_question` (`id`, `user_id`, `severity`, `question_1`, `question
 
 CREATE TABLE `users` (
   `id` int NOT NULL,
-  `usertype` varchar(50) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `usertype` varchar(50) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `phone` varchar(10) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `usertype`, `name`, `email`, `password`) VALUES
-(50, 'user', 'saadan', 'usersaadan@gmail.com', '$2y$10$b3lJZ4qtdntBZId0gNvV/.SwhX6z1Uqgat6C/m7fj/CMimoWFNaSm');
+INSERT INTO `users` (`id`, `usertype`, `name`, `phone`, `email`, `password`) VALUES
+(1, 'user', 'saadan', '8275646766', 'usersaadan@gmail.com', '$2y$10$Ny7EAvIUclBLReDPgokEReqaGv8c8s9Bk7ffISIg8HcLJg52fSYB6'),
+(3, 'user', 'saadan3', '0175647655', 'usersaadan3@gmail.com', '$2y$10$PSgDZToYxURZo/D0wVuJlOId8b7ngjILr0qNY1kWhKUh2O5C.R2Ti'),
+(4, 'admin', 'admin', '0172647566', 'admin@gmail.com', '$2y$10$zWMAVLV6swwGgMtm5gBSl.5n./drDpQEagFNaznLt04bkONSVx946');
 
 --
 -- Indexes for dumped tables
@@ -187,31 +171,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `log_mood`
 --
 ALTER TABLE `log_mood`
-  MODIFY `log_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `log_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `log_symptoms`
 --
 ALTER TABLE `log_symptoms`
-  MODIFY `log_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `log_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ph9_question`
 --
 ALTER TABLE `ph9_question`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

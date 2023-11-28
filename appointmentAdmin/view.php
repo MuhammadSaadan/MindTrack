@@ -81,7 +81,7 @@ if (isset($_GET['updateSuccess']) && $_GET['updateSuccess'] == 'true') {
                 }
             });
             toast.fire({
-                title: 'Symptom Updated',
+                title: 'Status Updated',
                 icon: 'success'
             });
         };
@@ -121,7 +121,6 @@ $conn->close();
                     <th>Date</th>
                     <th>Time</th>
                     <th>Status</th>
-                    <th>Action</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
@@ -157,7 +156,7 @@ $conn->close();
                         </td>
                         <td class="p-3 border-b border-[#ebedf2] dark:border-[#191e3a] text-center">
                             <div style="display: flex; gap: 10px;">
-                                <a href="/appointments/edit.php?edit_id=<?= $appointment['id'] ?>"
+                                <a href="../appointmentAdmin/edit.php?edit_id=<?= $appointment['id'] ?>"
                                     class="btn btn-primary btn-sm mr-2">Update</a>
                                 <button type="button" class="btn btn-danger btn-sm"
                                     onclick="showCancelAlert(<?= $appointment['id'] ?>)">Cancel Appointment</button>
