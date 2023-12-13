@@ -72,6 +72,12 @@ $thirtyDaysResult = $conn->query($thirtyDaysQuery);
 $monthlyMoodQuery = "SELECT MONTH(logged_at) as month, mood, COUNT(*) as count FROM log_mood WHERE user_id = $userId AND YEAR(logged_at) = YEAR(NOW()) GROUP BY month, mood";
 $monthlyMoodResult = $conn->query($monthlyMoodQuery);
 
+// Query for overall mood distribution
+$queryMoodDistribution = "SELECT mood, COUNT(*) AS frequency FROM log_mood WHERE user_id = $userId GROUP BY mood ORDER BY frequency DESC";
+$resultMoodDistribution = $conn->query($queryMoodDistribution);
+
+// Get the result
+$moodDistributionData = $resultMoodDistribution->fetch_all(MYSQLI_ASSOC);
 
 $log_moods = array();
 
@@ -257,12 +263,13 @@ include '../header-main.php';
         </div>
     </div>
     <br>
-    <!-- mood line chart 
-    <div x-ref="lineChart" class="bg-white dark:bg-black rounded-lg">
-        <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Your Mood Over Time</p>
-        <div x-ref="lineChart" style="height: 300px;"></div>
+
+    <div x-ref="moodPyramidChart" class="bg-white dark:bg-black rounded-lg">
+        <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Overall Mood Chart</p>
+        <div x-ref="moodPyramidChart" style="height: 300px;"></div>
     </div>
--->
+
+
     <br>
 
     <div class="panel">
@@ -333,6 +340,7 @@ include '../header-main.php';
                 moodPieChart: null,
                 sevenDaysChart: null,
                 thirtyDaysChart: null,
+                moodPyramidChart: null,
                 init() {
                     let isDark;
 
@@ -357,24 +365,24 @@ include '../header-main.php';
                     // Extract unique months
                     const uniqueMonths = Array.from(new Set(monthlyMoodData.map(entry => entry.month)));
 
-                    // Prepare data for the line chart
-                    const lineChartData = uniqueMonths.map(month => ({
-                        name: month,
-                        data: monthlyMoodData
-                            .filter(entry => entry.month === month)
-                            .map(entry => entry.count), // Use count for the y-axis
-                    }));
+                    const moodDistributionData = <?php echo json_encode($moodDistributionData); ?>;
+                    const moodDistributionLabels = moodDistributionData.map(entry => entry.mood);
+                    const moodDistributionSeries = moodDistributionData.map(entry => entry.frequency);
 
-                    // Ensure the sum of series is 100
+              
                     const normalizeData = (data) => {
                         const sum = data.reduce((acc, val) => acc + val, 0);
+                        // Normalize the data
                         return data.map(val => (val / sum) * 100);
                     };
+
 
                     const normalizedMoodSeries = normalizeData(moodSeries);
                     const normalizedSevenDaysSeries = normalizeData(sevenDaysSeries);
                     const normalizedThirtyDaysSeries = normalizeData(thirtyDaysSeries);
+                    const normalizedMoodDistributionSeries = normalizeData(moodDistributionSeries);
 
+                    // Mood Pie Chart
                     // Mood Pie Chart
                     const moodPieOptions = {
                         series: normalizedMoodSeries,
@@ -386,8 +394,10 @@ include '../header-main.php';
                         colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
                         legend: {
                             position: 'bottom',
-                        }
+                        },
+                 
                     };
+
 
                     this.moodPieChart = new ApexCharts(this.$refs.moodPieChart, moodPieOptions);
                     this.moodPieChart.render();
@@ -427,76 +437,52 @@ include '../header-main.php';
                     this.thirtyDaysChart.render();
 
 
+
+                    // Overall Mood Pyramid Chart
+                    const moodPyramidOptions = {
+                        series: [{
+                            name: "",
+                            data: moodDistributionSeries, // Use your normalized data here
+                        }],
+                        chart: {
+                            type: 'bar',
+                            height: 530,
+                        },
+                        plotOptions: {
+                            bar: {
+                                borderRadius: 0,
+                                horizontal: true,
+                                distributed: true,
+                                barHeight: '80%',
+                                isFunnel: false,
+                            },
+                        },
+                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                        dataLabels: {
+                            enabled: true,
+                            formatter: function (val, opt) {
+                                return opt.w.globals.labels[opt.dataPointIndex];
+                            },
+                            dropShadow: {
+                                enabled: true,
+                            },
+                        },
+
+                        xaxis: {
+                            categories: moodDistributionLabels,
+                        },
+                        legend: {
+                            show: false,
+                        },
+                    };
+
+                    this.moodPyramidChart = new ApexCharts(this.$refs.moodPyramidChart, moodPyramidOptions);
+                    this.moodPyramidChart.render();
+
                 },
             }));
         });
     </script>
-
-
-    <script>
-        document.addEventListener("alpine:init", () => {
-            Alpine.data("chart", () => ({
-
-                init() {
-                    isDark = this.$store.app.theme === "dark" ? true : false;
-
-                    let lineChart = new ApexCharts(this.$refs.lineChart, this.lineChartOptions);
-                    lineChart.render();
-
-                get lineChartOptions() {
-                        return {
-                            chart: {
-                                height: 300,
-                                type: 'line',
-                                toolbar: false
-                            },
-                            colors: ['#4361ee'],
-                            tooltip: {
-                                marker: false,
-                                y: {
-                                    formatter(number) {
-                                        return '$' + number
-                                    }
-                                }
-                            },
-                            stroke: {
-                                width: 2,
-                                curve: 'smooth'
-                            },
-                            xaxis: {
-                                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June'],
-                                axisBorder: {
-                                    color: isDark ? '#191e3a' : '#e0e6ed'
-                                },
-                            },
-                            yaxis: {
-                                opposite: isRtl ? true : false,
-                                labels: {
-                                    offsetX: isRtl ? -20 : 0,
-                                }
-                            },
-                            series: [{
-                                name: 'Sales',
-                                data: [45, 55, 75, 25, 45, 110],
-                            }],
-                            grid: {
-                                borderColor: isDark ? '#191e3a' : '#e0e6ed',
-                            },
-                            tooltip: {
-                                theme: isDark ? 'dark' : 'light',
-                            }
-                        }
-                    },
-
-                    this.$watch('$store.app.theme', () => {
-                        isDark = this.$store.app.theme === "dark" ? true : false;
-                        lineChart.updateOptions(this.lineChartOptions);
-                    })
-                },
-            }));
-        });
-    </script>
-
 
 
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>

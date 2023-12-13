@@ -10,7 +10,7 @@ if (isset($_SESSION['user_id'])) {
 } else {
 
     // Redirect if the user is not logged in
-    header("Location: ../index.php");
+    header("Location: /auth/login.php");
     exit();
 }
 

@@ -108,7 +108,9 @@
                         <li>
                             <a href="/reportSelftest/selftestReport.php">Self-Test Report</a>
                         </li>
-
+                        <li>
+                            <a href="/reportAll/reportAll.php">Full report</a>
+                        </li>
                     </ul>
                 </li>
 

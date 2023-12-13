@@ -32,7 +32,7 @@ include '../header-main.php';
                 counselors</p>
 
             <p class="lead">
-                <button type="button" x-on:click="window.location.href='/appointmentUser/view.php'"
+                <button type="button" x-on:click="window.location.href='/appointmentUser/view2.php'"
                     class="btn btn-dark">View Booked Appointments</button>
             </p>
         </div>

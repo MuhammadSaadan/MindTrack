@@ -71,7 +71,7 @@
                 if ($insertStmt) {
                     $insertStmt->bind_param("ssss", $name, $phone, $email, $password);
                     if ($insertStmt->execute()) {
-                        header("Location: ../index.php?updateSuccess=true");
+                        header("Location: /auth/login.php?updateSuccess=true");
                         exit;
 
                     } else {
@@ -130,7 +130,7 @@
             </form>
 
             <br>
-            <p class="text-center">Already have an account? <a href="../index.php"
+            <p class="text-center">Already have an account? <a href="/auth/login.php"
                     class="text-primary font-bold hover:underline">Sign In</a></p>
         </div>
     </div>
