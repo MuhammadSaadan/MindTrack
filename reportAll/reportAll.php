@@ -30,14 +30,6 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_type'])) {
 
 //MOOD
 
-
-// Query for highest frequency overall
-$queryOverallMood = "SELECT mood, COUNT(*) AS frequency FROM log_mood WHERE user_id = $userId GROUP BY mood ORDER BY frequency DESC LIMIT 1";
-$resultOverallMood = $conn->query($queryOverallMood);
-
-// Get the result
-$highestFrequencyOverallMood = $resultOverallMood->fetch_assoc();
-
 // Fetch mood data from the database
 $moodQuery = "SELECT mood, COUNT(*) as count FROM log_mood WHERE user_id = $userId GROUP BY mood";
 $moodResult = $conn->query($moodQuery);
@@ -53,14 +45,9 @@ $moodDistributionData = $resultMoodDistribution->fetch_all(MYSQLI_ASSOC);
 $log_moods = array();
 
 
+
+
 //SYMPTOM
-
-// Query for highest frequency overall
-$queryOverallSymptom = "SELECT symptom, COUNT(*) AS frequency FROM log_symptoms WHERE user_id = $userId GROUP BY symptom ORDER BY frequency DESC LIMIT 1";
-$resultOverallSymptom = $conn->query($queryOverallSymptom);
-
-// Get the result
-$highestFrequencyOverallSymptom = $resultOverallSymptom->fetch_assoc();
 
 // Fetch symptom data from the database
 $symptomQuery = "SELECT symptom, COUNT(*) as count FROM log_symptoms WHERE user_id = $userId GROUP BY symptom";
@@ -79,13 +66,6 @@ $log_Symptoms = array();
 
 
 //SELFTEST
-// Query for highest frequency overall
-$queryOverallSeverity = "SELECT severity, COUNT(*) AS frequency FROM ph9_question WHERE user_id = $userId GROUP BY severity ORDER BY frequency DESC LIMIT 1";
-$resultOverallSeverity = $conn->query($queryOverallSeverity);
-
-// Get the result
-$highestFrequencyOverallSeverity = $resultOverallSeverity->fetch_assoc();
-
 
 // Fetch severity data from the database
 $severityQuery = "SELECT severity, COUNT(*) as count FROM ph9_question WHERE user_id = $userId GROUP BY severity";
@@ -102,13 +82,23 @@ $severityDistributionData = $resultseverityDistribution->fetch_all(MYSQLI_ASSOC)
 $ph9_question = array();
 
 
-$highestFrequencyLabels = ["Mood", "Symptom", "Severity"];
-$highestFrequencyData = [
-    $highestFrequencyOverallMood['frequency'] ?? 0,
-    $highestFrequencyOverallSymptom['frequency'] ?? 0,
-    $highestFrequencyOverallSeverity['frequency'] ?? 0
-];
+// Get the highest, second highest, and third highest mood
+$highestMood = $moodDistributionData[0]['mood'];
+$secondHighestMood = $moodDistributionData[1]['mood'];
+$thirdHighestMood = $moodDistributionData[2]['mood'];
 
+// Get the highest, second highest, and third highest symptom
+$highestSymptom = $symptomDistributionData[0]['symptom'];
+$secondHighestSymptom = $symptomDistributionData[1]['symptom'];
+$thirdHighestSymptom = $symptomDistributionData[2]['symptom'];
+
+// Get the highest, second highest, and third highest severity
+$highestSeverity = $severityDistributionData[0]['severity'];
+$secondHighestSeverity = $severityDistributionData[1]['severity'];
+$thirdHighestSeverity = $severityDistributionData[2]['severity'];
+
+
+$sentence = "You're feeling {$highestMood}, dealing with {$highestSymptom} as your main challenge, and your overall emotional state is {$highestSeverity}.";
 
 
 if (isset($_SESSION['deletion_success']) && $_SESSION['deletion_success'] === true) {
@@ -173,7 +163,7 @@ include '../header-main.php';
             Health Report</a></li>
 
     <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"><a
-            class="bg-primary text-white-light p-1.5 ltr:pl-6 rtl:pr-6 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary before:z-[1]">Moods
+            class="bg-primary text-white-light p-1.5 ltr:pl-6 rtl:pr-6 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary before:z-[1]">Full
             Report</a>
 
     </li>
@@ -182,21 +172,28 @@ include '../header-main.php';
 </ol>
 <br>
 
-<div x-data="charts">
+<div class="prose bg-[#f1f2f3] px-4 py-9 sm:px-8 sm:py-16 rounded max-w-full dark:bg-[#1b2e4b] dark:text-white-light ">
+    <h2 class="text-dark mb-5 mt-4 text-center text-5xl dark:text-white-light">View all
+    </h2>
+    <hr class="my-4 dark:border-[#191e3a]">
+    <p class="lead my-5 text-center text-lg text-gray-600 dark:text-gray-400">View the full stats of your mental health
+        status</p>
     <div
-        class="prose bg-[#f1f2f3] px-4 py-9 sm:px-8 sm:py-16 rounded max-w-full dark:bg-[#1b2e4b] dark:text-white-light ">
-        <h2 class="text-dark mb-5 mt-4 text-center text-5xl dark:text-white-light">Full report
-        </h2>
-        <hr class="my-4 dark:border-[#191e3a]">
-        <p class="lead my-5 text-center text-lg text-gray-600 dark:text-gray-400">Below are the stats for your mental health status</p>
-        <p class="lead">
-            <button type="button" x-on:click="window.location.href='/mhealthInformation/moods.php'"
-                class="btn btn-dark">Learn more...</button>
-        </p>
+        class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-6 text-center flex flex-col justify-center">
+
+        <h3 class="text-2xl font-semibold mb-4 text-white-light text-[5px] text-center">
+            <?php echo $sentence; ?>
+        </h3>
     </div>
 
-    <br>
+    <p class="lead">
+        <button type="button" x-on:click="window.location.href='/mhealthInformation/moods.php'"
+            class="btn btn-dark">Learn more...</button>
+    </p>
+</div>
 
+<div x-data="charts">
+    <br>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <!-- overall mood pie chart -->
@@ -233,17 +230,15 @@ include '../header-main.php';
 
         <div x-ref="severityPyramidChart" class="bg-white dark:bg-black rounded-lg">
             <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Overall severity Chart</p>
-            <div x-ref="severityPyramidChart" style="height: 300px;"></div>
+            <div x-ref="severityPyramidChart" style="height: 50px;"></div>
         </div>
 
 
     </div>
 
+    <br>
 
-    <div id="highestFrequencyBarChart" class="bg-white dark:bg-black rounded-lg">
-            <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Highest Frequency for Mood, Symptom, and Severity</p>
-            <div style="height: 530px;"></div>
-        </div>
+
     <!-- Include the required libraries -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -258,7 +253,6 @@ include '../header-main.php';
                 symptomPyramidChart: null,
                 severityPieChart: null,
                 severityPyramidChart: null,
-                highestFrequencyBarChart: null, 
 
                 init() {
                     let isDark;
@@ -487,9 +481,20 @@ include '../header-main.php';
                     this.severityPyramidChart = new ApexCharts(this.$refs.severityPyramidChart, severityPyramidOptions);
                     this.severityPyramidChart.render();
 
-                    const highestFrequencyBarOptions = {
+                    const highestMoodName = moodDistributionData[0]['mood'];
+                    const highestSymptomName = symptomDistributionData[0]['symptom'];
+                    const highestSeverityName = severityDistributionData[0]['severity'];
+
+                    this.highestValuesBarChart = new ApexCharts(this.$refs.highestValuesBarChart, {
                         series: [{
-                            data: <?= json_encode($highestFrequencyData); ?>,
+                            name: 'Mood',
+                            data: [moodDistributionSeries[0]],
+                        }, {
+                            name: 'Symptom',
+                            data: [symptomDistributionSeries[0]],
+                        }, {
+                            name: 'Severity',
+                            data: [severityDistributionSeries[0]],
                         }],
                         chart: {
                             type: 'bar',
@@ -497,19 +502,54 @@ include '../header-main.php';
                         },
                         plotOptions: {
                             bar: {
-                                horizontal: false,
+                                endingShape: 'rounded',
+                            },
+                        },
+                        colors: ['#4361ee', '#805dca', '#00ab55'],
+                        dataLabels: {
+                            enabled: true,
+                            formatter: function (val, { seriesIndex }) {
+                                // Display the highest name based on the series index
+                                switch (seriesIndex) {
+                                    case 0:
+                                        return highestMoodName;
+                                    case 1:
+                                        return highestSymptomName;
+                                    case 2:
+                                        return highestSeverityName;
+                                    default:
+                                        return '';
+                                }
                             },
                         },
                         xaxis: {
-                            categories: <?= json_encode($highestFrequencyLabels); ?>,
+                            categories: [highestMoodName, highestSymptomName, highestSeverityName], // Labels for the x-axis
+                            labels: {
+                                style: {
+                                    fontSize: '12px', // Adjust font size if needed
+                                },
+                            },
                         },
-                        colors: ['#4361ee'], // Choose your desired color
-                    };
 
-                    this.highestFrequencyBarChart = new ApexCharts(document.querySelector("#highestFrequencyBarChart"), highestFrequencyBarOptions);
-                    this.highestFrequencyBarChart.render();
+                        legend: {
+                            show: false,
+                        },
+                        responsive: [{
+                            breakpoint: 480,
+                            options: {
+                                legend: {
+                                    position: 'bottom',
+                                },
+                            },
+                        }],
+                    });
+
+                    this.highestValuesBarChart.render();
+
 
                 },
+
+
             }));
         });
     </script>

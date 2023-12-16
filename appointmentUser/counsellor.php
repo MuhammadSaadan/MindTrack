@@ -1,6 +1,26 @@
 <?php
 require '../config.php'; // Include your database connection code
 
+// Function to get counselor name based on ID
+function getCounselorName($conn, $counselorId)
+{
+    $counselorQuery = "SELECT name FROM counselors WHERE id = ?";
+    $counselorStmt = mysqli_prepare($conn, $counselorQuery);
+    mysqli_stmt_bind_param($counselorStmt, "i", $counselorId);
+    mysqli_stmt_execute($counselorStmt);
+
+    // Bind the result variable by reference
+    mysqli_stmt_bind_result($counselorStmt, $counselorName);
+
+    // Fetch the result
+    mysqli_stmt_fetch($counselorStmt);
+
+    // Close the statement
+    mysqli_stmt_close($counselorStmt);
+
+    return $counselorName;
+}
+
 // Initialize available time slots array and selected date
 $availableTimeSlots = [];
 $selectedDate = '';
@@ -22,32 +42,38 @@ if (isset($_POST['check_availability'])) {
 
 // Check if the "Book Appointment" button is clicked
 if (isset($_POST['submit'])) {
-    $selectedTime = $_POST['time'];
-
     // Trim whitespace and check if the selected date is not empty
     $selectedDate = trim($_POST['date']);
     if (empty($selectedDate)) {
         $errorMessage = "Please select a date before booking an appointment.";
     } else {
-        // Insert the appointment into the database
-        $insertQuery = "INSERT INTO appointments (user_id, counsellor, status, date, time) VALUES (?, ?, 'Pending', ?, ?)";
-        $insertStmt = mysqli_prepare($conn, $insertQuery);
+        // Fetch the counselor's ID based on the selected counselor name
+        $counselorId = $_GET['id'];
 
-        // Use prepared statement
-        $user_id = 1; // Replace with the actual user ID
-        $counsellor = "Chen Wei Ming"; // Replace with the actual counsellor
+        // Fetch the counselor's name based on the selected ID
+        $counselor = getCounselorName($conn, $counselorId);
 
-        mysqli_stmt_bind_param($insertStmt, "isss", $user_id, $counsellor, $selectedDate, $selectedTime);
+        if ($counselor !== null) {
+            // Insert the appointment into the database
+            $insertQuery = "INSERT INTO appointments (user_id, counselor_id, status, date, time) VALUES (?, ?, 'Pending', ?, ?)";
+            $insertStmt = mysqli_prepare($conn, $insertQuery);
+            $user_id = 1; // Replace with the actual user ID
+            $selectedTime = $_POST['time'];
 
-        // Execute the statement
-        if (mysqli_stmt_execute($insertStmt)) {
-            $successMessage = "Appointment booked successfully!";
+            mysqli_stmt_bind_param($insertStmt, "iiss", $user_id, $counselorId, $selectedDate, $selectedTime);
+
+            // Execute the statement
+            if (mysqli_stmt_execute($insertStmt)) {
+                $successMessage = "Appointment booked successfully!";
+            } else {
+                $errorMessage = "Error booking appointment: " . mysqli_error($conn);
+            }
+
+            // Close the statement
+            mysqli_stmt_close($insertStmt);
         } else {
-            $errorMessage = "Error booking appointment: " . mysqli_error($conn);
+            $errorMessage = "Counselor not found.";
         }
-
-        // Close the statement
-        mysqli_stmt_close($insertStmt);
     }
 }
 
@@ -102,7 +128,8 @@ include '../header-main.php';
             class="p-1.5 ltr:pl-3 rtl:pr-3 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70">Appointment</a>
     </li>
     <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"><a
-            class="bg-primary text-white-light p-1.5 ltr:pl-6 rtl:pr-6 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary before:z-[1]">Chen Wei Ming
+            class="bg-primary text-white-light p-1.5 ltr:pl-6 rtl:pr-6 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary before:z-[1]">
+            <?php echo getCounselorName($conn, $_GET['id']); ?>
         </a></li>
 
 </ol>
@@ -111,8 +138,9 @@ include '../header-main.php';
 <div class="flex justify-center items-center min-h-screen bg-gray-100">
     <div class="panel sm:w-[480px] m-6 max-w-lg w-full bg-white rounded-lg p-6 shadow-md">
         <h2 class="text-2xl font-semibold mb-4 text-center">Book an Appointment</h2>
-        <p class="lead my-2 text-center text-lg text-gray-600 dark:text-gray-400">Chen Wei Ming</p>
-
+        <p class="lead my-2 text-center text-lg text-gray-600 dark:text-gray-400">
+            <?php echo getCounselorName($conn, $_GET['id']); ?>
+        </p>
 
         <!-- Check Availability Form -->
         <form method="post" action="" class="mb-4">
@@ -123,9 +151,7 @@ include '../header-main.php';
         </form>
 
         <!-- Display available time slots -->
-
         <?php
-
         if (!empty($availableTimeSlots)) {
             echo "<div class='mb-4'>";
             echo "<h5 style='font-weight: 600;' class='mb-2'>Available Time Slots for $selectedDate:</h5>";

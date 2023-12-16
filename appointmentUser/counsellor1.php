@@ -8,12 +8,12 @@ $successMessage = ''; // Initialize success message
 $errorMessage = ''; // Initialize error message
 
 // Check if the "Check Availability" button is clicked
-if(isset($_POST['check_availability'])) {
+if (isset($_POST['check_availability'])) {
     $selectedDate = $_POST['date'];
 
     // Validate that the selected date is not before the current date
     $currentDate = date('Y-m-d');
-    if($selectedDate < $currentDate) {
+    if ($selectedDate < $currentDate) {
         $errorMessage = "Please select a date on or after the current date.";
     } else {
         $availableTimeSlots = getAvailableTimeSlots($selectedDate, $conn);
@@ -21,12 +21,12 @@ if(isset($_POST['check_availability'])) {
 }
 
 // Check if the "Book Appointment" button is clicked
-if(isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
     $selectedTime = $_POST['time'];
 
     // Trim whitespace and check if the selected date is not empty
     $selectedDate = trim($_POST['date']);
-    if(empty($selectedDate)) {
+    if (empty($selectedDate)) {
         $errorMessage = "Please select a date before booking an appointment.";
     } else {
         // Insert the appointment into the database
@@ -40,10 +40,10 @@ if(isset($_POST['submit'])) {
         mysqli_stmt_bind_param($insertStmt, "isss", $user_id, $counsellor, $selectedDate, $selectedTime);
 
         // Execute the statement
-        if(mysqli_stmt_execute($insertStmt)) {
+        if (mysqli_stmt_execute($insertStmt)) {
             $successMessage = "Appointment booked successfully!";
         } else {
-            $errorMessage = "Error booking appointment: ".mysqli_error($conn);
+            $errorMessage = "Error booking appointment: " . mysqli_error($conn);
         }
 
         // Close the statement
@@ -51,7 +51,8 @@ if(isset($_POST['submit'])) {
     }
 }
 
-function getAvailableTimeSlots($date, $conn) {
+function getAvailableTimeSlots($date, $conn)
+{
     // Query to get all booked time slots for the selected date
     $query = "SELECT time FROM appointments WHERE date = ?";
 
@@ -61,16 +62,16 @@ function getAvailableTimeSlots($date, $conn) {
     mysqli_stmt_execute($stmt);
 
     // Check for errors
-    if(!$stmt) {
-        die("Error: ".mysqli_error($conn));
+    if (!$stmt) {
+        die("Error: " . mysqli_error($conn));
     }
 
     $result = mysqli_stmt_get_result($stmt);
 
-    if($result) {
+    if ($result) {
         // Fetch booked time slots
         $bookedTimeSlots = [];
-        while($row = mysqli_fetch_assoc($result)) {
+        while ($row = mysqli_fetch_assoc($result)) {
             $bookedTimeSlots[] = $row['time'];
         }
 
@@ -85,7 +86,7 @@ function getAvailableTimeSlots($date, $conn) {
         return $availableTimeSlots;
     } else {
         // Handle query error
-        die("Error: ".mysqli_error($conn));
+        die("Error: " . mysqli_error($conn));
     }
 }
 
@@ -126,11 +127,11 @@ include '../header-main.php';
 
         <?php
 
-        if(!empty($availableTimeSlots)) {
+        if (!empty($availableTimeSlots)) {
             echo "<div class='mb-4'>";
-            echo "<h2 class='text-lg font-semibold mb-2'>Available Time Slots for $selectedDate:</h2>";
+            echo "<h5 style='font-weight: 600;' class='mb-2'>Available Time Slots for $selectedDate:</h5>";
             echo "<ul>";
-            foreach($availableTimeSlots as $timeSlot) {
+            foreach ($availableTimeSlots as $timeSlot) {
                 echo "<li>$timeSlot</li>";
             }
             echo "</ul>";
@@ -139,7 +140,7 @@ include '../header-main.php';
         ?>
 
         <!-- Book Appointment Form -->
-        <?php if(isset($availableTimeSlots) && !empty($availableTimeSlots)): ?>
+        <?php if (isset($availableTimeSlots) && !empty($availableTimeSlots)): ?>
             <form method="post" action="">
                 <!-- Add a hidden input field to carry over the selected date -->
                 <input type="hidden" name="date" value="<?php echo htmlspecialchars($selectedDate); ?>">
@@ -147,7 +148,7 @@ include '../header-main.php';
                 <label for="time" class="block mb-2">Select Time:</label>
                 <select name="time" required class="form-input mb-4">
                     <?php
-                    foreach($availableTimeSlots as $timeSlot) {
+                    foreach ($availableTimeSlots as $timeSlot) {
                         echo "<option value=\"$timeSlot\">$timeSlot</option>";
                     }
                     ?>
@@ -163,9 +164,9 @@ include '../header-main.php';
     // Display SweetAlert2 notifications based on PHP messages
     document.addEventListener('DOMContentLoaded', function () {
         <?php
-        if(!empty($successMessage)) {
+        if (!empty($successMessage)) {
             echo "coloredToast('success', '$successMessage');";
-        } elseif(!empty($errorMessage)) {
+        } elseif (!empty($errorMessage)) {
             echo "coloredToast('error', '$errorMessage');";
         }
         ?>

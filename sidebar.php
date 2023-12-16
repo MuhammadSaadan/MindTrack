@@ -62,7 +62,7 @@
                         </li>
 
                         <li>
-                            <a href="/appointmentUser/index.php">Appointment</a>
+                            <a href="/appointmentUser/index2.php">Appointment</a>
                         </li>
 
 
@@ -109,7 +109,7 @@
                             <a href="/reportSelftest/selftestReport.php">Self-Test Report</a>
                         </li>
                         <li>
-                            <a href="/reportAll/reportAll.php">Full report</a>
+                            <a href="/reportAll/reportAll.php">View all</a>
                         </li>
                     </ul>
                 </li>

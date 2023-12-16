@@ -37,8 +37,8 @@ include '../header-main.php';
             </p>
         </div>
     </div>
-
     <br>
+
 
     <div class="flex justify-center">
 
@@ -62,8 +62,10 @@ include '../header-main.php';
                         challenges.
                     </p>
                     <br>
+
                     <p><button type="button" onclick="window.location.href='/appointmentUser/counsellor1.php'"
                             class="btn btn-primary">Book an Appointment</button></p>
+
                 </div>
             </div>
 
@@ -87,7 +89,11 @@ include '../header-main.php';
                         elements of Indian psychology and meditation into her sessions, offering a nurturing environment
                         for the Malaysian Indian community to explore their mental health concerns.
                     </p>
-                    <button type="button" class="btn btn-primary mt-6">Book An Appointment</button>
+                    <br>
+                    </p>
+
+                    <p><button type="button" onclick="window.location.href='/appointmentUser/counsellor2.php'"
+                            class="btn btn-primary">Book an Appointment</button></p>
                 </div>
             </div>
 
@@ -112,7 +118,10 @@ include '../header-main.php';
                         practices and modern psychological approaches, providing a culturally relevant perspective. His
                         supportive and holistic counseling style encourages personal growth and resilience.
                     </p>
-                    <button type="button" class="btn btn-primary mt-6">Book An Appointment</button>
+                    <br>
+
+                    <p><button type="button" onclick="window.location.href='/appointmentUser/counsellor3.php'"
+                            class="btn btn-primary">Book an Appointment</button></p>
                 </div>
             </div>
 
@@ -137,7 +146,10 @@ include '../header-main.php';
                         attuned counseling style creates a safe space for clients to explore their mental health
                         challenges.
                     </p>
-                    <button type="button" class="btn btn-primary mt-6">Book An Appointment</button>
+                    <br>
+
+                    <p><button type="button" onclick="window.location.href='/appointmentUser/counsellor4.php'"
+                            class="btn btn-primary">Book an Appointment</button></p>
                 </div>
             </div>
 

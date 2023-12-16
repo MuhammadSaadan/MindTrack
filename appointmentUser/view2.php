@@ -133,6 +133,14 @@ $conn->close();
         /* Remove right margin for the last item */
     }
 </style>
+
+<div class="panel">
+    <div class="flex items-center space-x-4">
+        <h5 class="text-lg text-gray-600 dark:text-gray-400"><strong>Upcoming Appointments</strong></h5>
+    </div>
+</div>
+<br>
+
 <div class="appointment-grid">
     <?php foreach ($log_appointments as $appointment): ?>
         <?php if ($appointment['status'] !== 'Completed'): ?>
@@ -152,8 +160,8 @@ $conn->close();
                     </p>
                     <br>
                     <!-- Add Cancel Button -->
-                    <button type="button" class="btn btn-danger btn-sm"
-                        onclick="showAlert(<?= $appointment['id'] ?>)">Cancel Appointment</button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="showAlert(<?= $appointment['id'] ?>)">Cancel
+                        Appointment</button>
                 </div>
             </div>
         <?php endif; ?>
@@ -206,7 +214,7 @@ $conn->close();
                             <?= $set['status'] ?>
                         </td>
 
-                    
+
                     </tr>
                     <?php
                     $currentNumber++; // Increment the counter for the next row
