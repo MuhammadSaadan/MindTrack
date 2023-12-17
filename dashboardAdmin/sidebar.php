@@ -57,7 +57,7 @@
                             <a href="/appointmentAdmin/view.php">Manage Appointments</a>
                         </li>
                         <li>
-                            <a href="/counsellorAdmin/register.php">Manage Counsellor</a>
+                            <a href="/counsellorAdmin/index.php">Manage Counsellors</a>
                         </li>
                     </ul>
                 </li>

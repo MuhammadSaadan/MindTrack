@@ -194,81 +194,78 @@ include '../header-main.php';
         <p class="lead my-5 text-center text-lg text-gray-600 dark:text-gray-400">Below are the stats for your logged
             Severity</p>
         <p class="lead">
-            <button type="button" x-on:click="window.location.href='/selfTest/index.php'"
-                class="btn btn-dark">Learn more...</button>
+            <button type="button" x-on:click="window.location.href='/selfTest/index.php'" class="btn btn-dark">Learn
+                more...</button>
         </p>
     </div>
 
     <br>
 
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10"> <!-- Adjusted gap-10 to gap-1rem -->
         <!-- overall severity pie chart -->
         <div x-ref="severityPieChart" class="bg-white dark:bg-black rounded-lg">
-            <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Overall severity</p>
-            <div x-ref="severityPieChart" style="height: 300px;"></div>
+            <p class="lead mt-1rem text-center text-lg text-gray-600 dark:text-gray-400">Overall Severity</p>
+            <div x-ref="severityPieChart" style="height: 18.75rem;"></div>
         </div>
 
         <div
-            class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-6 text-center flex flex-col justify-center">
-
-            <h3 class="text-2xl font-semibold mb-4 text-white-light text-[5px] text-center">
+            class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-1rem text-center flex flex-col justify-center">
+            <h3 class="text-2xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
                 <?php echo "Your overall severity is,"; ?>
             </h3>
-            <h3 class="text-5xl font-semibold mb-4 text-white-light text-[5px] text-center">
+            <h3 class="text-5xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
                 <?php echo isset($highestFrequencyOverall['severity']) ? $highestFrequencyOverall['severity'] : 'No data recorded'; ?>
             </h3>
-            <p class="text-white-light text-[15px] mb-3.5 text-center"></p>
+            <p class="text-white-light text-[0.9375rem] mb-0.21875rem text-center"></p>
         </div>
 
         <!-- 7 days -->
         <div x-ref="sevenDaysChart" class="bg-white dark:bg-black rounded-lg">
-            <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Your Frequent Severity (7 Days)</p>
-            <div x-ref="sevenDaysChart" style="height: 300px;"></div>
+            <p class="lead mt-1rem text-center text-lg text-gray-600 dark:text-gray-400">Your Frequent Severity (7 Days)
+            </p>
+            <div x-ref="sevenDaysChart" style="height: 18.75rem;"></div>
         </div>
         <div
-            class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-6 text-center flex flex-col justify-center">
-
-            <h3 class="text-2xl font-semibold mb-4 text-white-light text-[5px] text-center">
+            class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-1rem text-center flex flex-col justify-center">
+            <h3 class="text-2xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
                 You have been feeling,
             </h3>
-            <h3 class="text-5xl font-semibold mb-4 text-white-light text-[5px] text-center">
+            <h3 class="text-5xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
                 <?php echo isset($highestFrequency7Days['severity']) ? $highestFrequency7Days['severity'] : 'No data recorded'; ?>
             </h3>
-            <h3 class="text-2xl font-semibold mb-4 text-white-light text-[5px] text-center">
+            <h3 class="text-2xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
                 for the past week.
             </h3>
-            <p class="text-white-light text-[15px] mb-3.5 text-center"></p>
+            <p class="text-white-light text-[0.9375rem] mb-0.21875rem text-center"></p>
         </div>
-
 
         <!-- 30 days -->
         <div x-ref="thirtyDaysChart" class="bg-white dark:bg-black rounded-lg">
-            <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Your Frequent Severity (30 Days)</p>
-            <div x-ref="thirtyDaysChart" style="height: 300px;"></div>
+            <p class="lead mt-1rem text-center text-lg text-gray-600 dark:text-gray-400">Your Frequent Severity (30
+                Days)</p>
+            <div x-ref="thirtyDaysChart" style="height: 18.75rem;"></div>
         </div>
         <div
-            class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-6 text-center flex flex-col justify-center">
-
-            <h3 class="text-2xl font-semibold mb-4 text-white-light text-[5px] text-center">
+            class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-1rem text-center flex flex-col justify-center">
+            <h3 class="text-2xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
                 You have been feeling,
             </h3>
-            <h3 class="text-5xl font-semibold mb-4 text-white-light text-[5px] text-center">
+            <h3 class="text-5xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
                 <?php echo isset($highestFrequency30Days['severity']) ? $highestFrequency30Days['severity'] : 'No data recorded'; ?>
             </h3>
-            <h3 class="text-2xl font-semibold mb-4 text-white-light text-[5px] text-center">
+            <h3 class="text-2xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
                 for the past month.
             </h3>
-            <p class="text-white-light text-[15px] mb-3.5 text-center"></p>
+            <p class="text-white-light text-[0.9375rem] mb-0.21875rem text-center"></p>
         </div>
     </div>
     <br>
 
     <div x-ref="severityPyramidChart" class="bg-white dark:bg-black rounded-lg">
-        <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Overall severity Chart</p>
-        <div x-ref="severityPyramidChart" style="height: 300px;"></div>
+        <p class="lead mt-1rem text-center text-lg text-gray-600 dark:text-gray-400">Overall Severity Chart</p>
+        <div x-ref="severityPyramidChart" style="height: 18.75rem;"></div>
     </div>
-
 
     <br>
 
@@ -310,7 +307,7 @@ include '../header-main.php';
                             </td>
                             <td class="p-3 border-b border-[#ebedf2] dark:border-[#191e3a] text-center">
                                 <div style="display: flex; gap: 10px;">
-                                  
+
 
                                     <button type="button" class="btn btn-danger btn-sm"
                                         onclick="showAlert(<?= $severity['id'] ?>)">Delete</button>
@@ -368,7 +365,7 @@ include '../header-main.php';
                     const severityDistributionLabels = severityDistributionData.map(entry => entry.severity);
                     const severityDistributionSeries = severityDistributionData.map(entry => entry.frequency);
 
-              
+
                     const normalizeData = (data) => {
                         const sum = data.reduce((acc, val) => acc + val, 0);
                         // Normalize the data
@@ -394,7 +391,7 @@ include '../header-main.php';
                         legend: {
                             position: 'bottom',
                         },
-                 
+
                     };
 
 

@@ -13,9 +13,10 @@ $log_appointments = array();
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $user_id = $_SESSION['user_id'];
 
-    $sql = "SELECT appointments.*, users.name AS user_name, users.phone AS user_phone
+    $sql = "SELECT appointments.*, users.name AS user_name, users.phone AS user_phone, counselors.name AS counselor_name
     FROM appointments
     INNER JOIN users ON appointments.user_id = users.id
+    INNER JOIN counselors ON appointments.counselor_id = counselors.id
     WHERE appointments.user_id = $user_id
     ORDER BY appointments.id ASC";
     $result = $conn->query($sql);
@@ -104,7 +105,7 @@ $conn->close();
     <li class="bg-[#ebedf2] rounded-tl-md rounded-bl-md dark:bg-[#1b2e4b]"><a href="/dashboardUser/dashboard.php"
             class="p-1.5 ltr:pl-3 rtl:pr-3 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70">Dashboard</a>
     </li>
-    <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"><a href="/appointmentUser/index.php"
+    <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"><a href="/appointmentUser/index2.php"
             class="p-1.5 px-3 ltr:pl-6 rtl:pr-6 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70">Appointment</a>
     </li>
     <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"><a
@@ -148,15 +149,15 @@ $conn->close();
                 class="appointment-card bg-white shadow-[4px_6px_10px_-3px_#bfc9d4] rounded border border-[#e0e6ed] dark:border-[#1b2e4b] dark:bg-[#191e3a] dark:shadow-none">
                 <div class="py-7 px-6">
                     <h5 class="text-[#3b3f5c] text-xl font-semibold mb-4 dark:text-white-light">
-                        <?= $appointment['counsellor'] ?>
+                        <?= $appointment['counselor_name'] ?>
                     </h5>
                     <p class="text-white-dark">
-                        Date:
-                        <?= $appointment['date'] ?><br>
-                        Time:
-                        <?= $appointment['time'] ?><br>
-                        Status:
-                        <?= $appointment['status'] ?>
+                    Date:
+                    <?= $appointment['date'] ?><br>
+                    Time:
+                    <?= $appointment['time'] ?><br>
+                    Status:
+                    <?= $appointment['status'] ?>
                     </p>
                     <br>
                     <!-- Add Cancel Button -->
@@ -208,7 +209,7 @@ $conn->close();
                             <?= $set['time'] ?>
                         </td>
                         <td>
-                            <?= $set['counsellor'] ?>
+                            <?= $set['counselor_name'] ?>
                         </td>
                         <td>
                             <?= $set['status'] ?>
@@ -237,16 +238,16 @@ $conn->close();
     }
     );
 
-    async function showAlert(logappointments) {
+    function showAlert(appointmentId, counselorId) {
         const swalWithBootstrapButtons = window.Swal.mixin({
             confirmButtonClass: 'btn btn-danger',
             cancelButtonClass: 'btn btn-dark ltr:mr-3 rtl:ml-3',
             buttonsStyling: false,
         });
+
         swalWithBootstrapButtons
             .fire({
                 title: '<div style="text-align: center;">Are you sure?</div>',
-                // text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Cancel Appointment',
@@ -256,42 +257,28 @@ $conn->close();
             })
             .then((result) => {
                 if (result.value) {
-                    // Pass the logId to the PHP script for deletion
-                    deleteLog(logappointments);
+                    // Pass the appointmentId and counselorId to the PHP script for cancellation
+                    deleteAppointment(appointmentId, counselorId);
                 }
-                //else if (result.dismiss === window.Swal.DismissReason.cancel) {
-                //swalWithBootstrapButtons.fire('<div style="text-align: center;">Cancelled</div>');
-                // }
             });
     }
-
-    async function deleteLog(logappointments) {
+    async function deleteAppointment(appointmentId, counselorId) {
         const formData = new FormData();
-        formData.append('delete_id', logappointments);
+        formData.append('delete_id', appointmentId);
+        formData.append('counselor_id', counselorId);
 
         try {
             const response = await fetch('<?php echo $_SERVER['PHP_SELF']; ?>', {
                 method: 'POST',
-                body: formData
+                body: formData,
             });
 
             if (response.ok) {
-                // const swalWithBootstrapButtons = window.Swal.mixin({
-                //confirmButtonClass: 'btn btn-secondary',
-                //cancelButtonClass: 'btn btn-dark ltr:mr-3 rtl:ml-3',
-                //buttonsStyling: false,
-
-
-                // If deletion was successful, display the success message
-                //swalWithBootstrapButtons.fire('Mood Deleted');
-
-                // Reload the page after a short delay (e.g., 1.5 seconds)
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1500); // Adjust the delay time as needed
+                // If cancellation was successful, display the success message
+                window.location.reload();
             } else {
-                // If deletion failed, display an error message
-                swalWithBootstrapButtons.fire('Error', 'Failed to delete', 'error');
+                // If cancellation failed, display an error message
+                swalWithBootstrapButtons.fire('Error', 'Failed to cancel appointment', 'error');
             }
         } catch (error) {
             // Handle any unexpected errors

@@ -36,7 +36,7 @@ if (isset($_POST['check_availability'])) {
     if ($selectedDate < $currentDate) {
         $errorMessage = "Please select a date on or after the current date.";
     } else {
-        $availableTimeSlots = getAvailableTimeSlots($selectedDate, $conn);
+        $availableTimeSlots = getAvailableTimeSlots($selectedDate, $_GET['id'], $conn);
     }
 }
 
@@ -77,14 +77,14 @@ if (isset($_POST['submit'])) {
     }
 }
 
-function getAvailableTimeSlots($date, $conn)
+function getAvailableTimeSlots($date, $counselorId, $conn)
 {
-    // Query to get all booked time slots for the selected date
-    $query = "SELECT time FROM appointments WHERE date = ?";
+    // Query to get all booked time slots for the selected date and counselor
+    $query = "SELECT time FROM appointments WHERE date = ? AND counselor_id = ?";
 
     // Use prepared statement
     $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "s", $date);
+    mysqli_stmt_bind_param($stmt, "si", $date, $counselorId);
     mysqli_stmt_execute($stmt);
 
     // Check for errors
@@ -116,6 +116,7 @@ function getAvailableTimeSlots($date, $conn)
     }
 }
 
+
 include '../header-main.php';
 ?>
 
@@ -124,7 +125,7 @@ include '../header-main.php';
     <li class="bg-[#ebedf2] rounded-tl-md rounded-bl-md dark:bg-[#1b2e4b]"><a href="/dashboardUser/dashboard.php"
             class="p-1.5 ltr:pl-3 rtl:pr-3 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70">Dashboard</a>
     </li>
-    <li class="bg-[#ebedf2] rounded-tl-md rounded-bl-md dark:bg-[#1b2e4b]"><a href="/appointmentUser/index.php"
+    <li class="bg-[#ebedf2] rounded-tl-md rounded-bl-md dark:bg-[#1b2e4b]"><a href="/appointmentUser/index2.php"
             class="p-1.5 ltr:pl-3 rtl:pr-3 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70">Appointment</a>
     </li>
     <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"><a

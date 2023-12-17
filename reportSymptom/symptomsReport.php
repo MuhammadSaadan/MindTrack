@@ -203,10 +203,9 @@ include '../header-main.php';
 
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        <!-- overall symptom pie chart -->
         <div x-ref="symptomPieChart" class="bg-white dark:bg-black rounded-lg">
             <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Overall symptom</p>
-            <div x-ref="symptomPieChart" style="height: 300px;"></div>
+            <div x-ref="symptomPieChart" style="height: 18.75rem;"></div> <!-- Converted from 300px to rem -->
         </div>
 
         <div
@@ -223,8 +222,9 @@ include '../header-main.php';
 
         <!-- 7 days -->
         <div x-ref="sevenDaysChart" class="bg-white dark:bg-black rounded-lg">
-            <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Your Frequent Symptoms (7 Days)</p>
-            <div x-ref="sevenDaysChart" style="height: 300px;"></div>
+            <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Your Frequent Symptoms (7 Days)
+            </p>
+            <div x-ref="sevenDaysChart" style="height: 18.75rem;"></div> <!-- Converted from 300px to rem -->
         </div>
         <div
             class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-6 text-center flex flex-col justify-center">
@@ -241,11 +241,11 @@ include '../header-main.php';
             <p class="text-white-light text-[15px] mb-3.5 text-center"></p>
         </div>
 
-
         <!-- 30 days -->
         <div x-ref="thirtyDaysChart" class="bg-white dark:bg-black rounded-lg">
-            <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Your Frequent Symptoms (30 Days)</p>
-            <div x-ref="thirtyDaysChart" style="height: 300px;"></div>
+            <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Your Frequent Symptoms (30 Days)
+            </p>
+            <div x-ref="thirtyDaysChart" style="height: 18.75rem;"></div> <!-- Converted from 300px to rem -->
         </div>
         <div
             class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-6 text-center flex flex-col justify-center">
@@ -261,291 +261,289 @@ include '../header-main.php';
             </h3>
             <p class="text-white-light text-[15px] mb-3.5 text-center"></p>
         </div>
-    </div>
-    <br>
 
-    <div x-ref="symptomPyramidChart" class="bg-white dark:bg-black rounded-lg">
-        <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Overall symptom Chart</p>
-        <div x-ref="symptomPyramidChart" style="height: 300px;"></div>
-    </div>
-
-
-    <br>
-
-    <div class="panel">
-
-        <div class="table-responsive">
-            <table id="SymptomsTable" class="table">
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>symptom</th>
-                        <th>Description</th>
-                        <th>Intensity Level</th>
-                        <th>Date and Time</th>
-                        <th class="text-center">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $currentNumber = 1; // Initialize the counter for row numbering
-                    
-                    foreach ($log_Symptoms as $symptom):
-                        ?>
-                        <tr id="row-<?= $symptom['log_id'] ?>">
-                            <td>
-                                <?= $currentNumber ?>
-                            </td>
-                            <td>
-                                <?= $symptom['symptom'] ?>
-                            </td>
-                            <td>
-                                <?= $symptom['description'] ?>
-                            </td>
-                            <td>
-                                <?= $symptom['rating'] ?>
-                            </td>
-                            <td>
-                                <?= $symptom['logged_at'] ?>
-                            </td>
-                            <td class="p-3 border-b border-[#ebedf2] dark:border-[#191e3a] text-center">
-                                <div style="display: flex; gap: 10px;">
-                                    <a href="/reportsymptom/edit.php?edit_id=<?= $symptom['log_id'] ?>"
-                                        class="btn btn-primary btn-sm mr-2">Edit</a>
-
-                                    <button type="button" class="btn btn-danger btn-sm"
-                                        onclick="showAlert(<?= $symptom['log_id'] ?>)">Delete</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php
-                        $currentNumber++; // Increment the counter for the next row
-                    endforeach;
-                    ?>
-                </tbody>
-            </table>
+        <div x-ref="symptomPyramidChart" class="bg-white dark:bg-black rounded-lg">
+            <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Overall symptom Chart</p>
+            <div x-ref="symptomPyramidChart" style="height: 18.75rem;"></div> <!-- Converted from 300px to rem -->
         </div>
-    </div>
+
+
+        <br>
+
+        <div class="panel">
+
+            <div class="table-responsive">
+                <table id="SymptomsTable" class="table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>symptom</th>
+                            <th>Description</th>
+                            <th>Intensity Level</th>
+                            <th>Date and Time</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $currentNumber = 1; // Initialize the counter for row numbering
+                        
+                        foreach ($log_Symptoms as $symptom):
+                            ?>
+                            <tr id="row-<?= $symptom['log_id'] ?>">
+                                <td>
+                                    <?= $currentNumber ?>
+                                </td>
+                                <td>
+                                    <?= $symptom['symptom'] ?>
+                                </td>
+                                <td>
+                                    <?= $symptom['description'] ?>
+                                </td>
+                                <td>
+                                    <?= $symptom['rating'] ?>
+                                </td>
+                                <td>
+                                    <?= $symptom['logged_at'] ?>
+                                </td>
+                                <td class="p-3 border-b border-[#ebedf2] dark:border-[#191e3a] text-center">
+                                    <div style="display: flex; gap: 10px;">
+                                        <a href="/reportsymptom/edit.php?edit_id=<?= $symptom['log_id'] ?>"
+                                            class="btn btn-primary btn-sm mr-2">Edit</a>
+
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                            onclick="showAlert(<?= $symptom['log_id'] ?>)">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php
+                            $currentNumber++; // Increment the counter for the next row
+                        endforeach;
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
 
 
-    <!-- Include the required libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <!-- Include the required libraries -->
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-    <!-- scripts -->
-    <script>
-        document.addEventListener("alpine:init", () => {
-            Alpine.data("charts", () => ({
-                symptomPieChart: null,
-                sevenDaysChart: null,
-                thirtyDaysChart: null,
-                symptomPyramidChart: null,
-                init() {
-                    let isDark;
+        <!-- scripts -->
+        <script>
+            document.addEventListener("alpine:init", () => {
+                Alpine.data("charts", () => ({
+                    symptomPieChart: null,
+                    sevenDaysChart: null,
+                    thirtyDaysChart: null,
+                    symptomPyramidChart: null,
+                    init() {
+                        let isDark;
 
-                    // symptom data
-                    const symptomData = <?php echo json_encode($symptomResult->fetch_all(MYSQLI_ASSOC)); ?>;
-                    const Symptomseries = symptomData.map(entry => entry.count);
-                    const symptomLabels = symptomData.map(entry => entry.symptom);
+                        // symptom data
+                        const symptomData = <?php echo json_encode($symptomResult->fetch_all(MYSQLI_ASSOC)); ?>;
+                        const Symptomseries = symptomData.map(entry => entry.count);
+                        const symptomLabels = symptomData.map(entry => entry.symptom);
 
-                    // 7 Days data
-                    const sevenDaysData = <?php echo json_encode($sevenDaysResult->fetch_all(MYSQLI_ASSOC)); ?>;
-                    const sevenDaysSeries = sevenDaysData.map(entry => entry.count);
-                    const sevenDaysLabels = sevenDaysData.map(entry => entry.symptom);
+                        // 7 Days data
+                        const sevenDaysData = <?php echo json_encode($sevenDaysResult->fetch_all(MYSQLI_ASSOC)); ?>;
+                        const sevenDaysSeries = sevenDaysData.map(entry => entry.count);
+                        const sevenDaysLabels = sevenDaysData.map(entry => entry.symptom);
 
-                    // 30 Days data
-                    const thirtyDaysData = <?php echo json_encode($thirtyDaysResult->fetch_all(MYSQLI_ASSOC)); ?>;
-                    const thirtyDaysSeries = thirtyDaysData.map(entry => entry.count);
-                    const thirtyDaysLabels = thirtyDaysData.map(entry => entry.symptom);
+                        // 30 Days data
+                        const thirtyDaysData = <?php echo json_encode($thirtyDaysResult->fetch_all(MYSQLI_ASSOC)); ?>;
+                        const thirtyDaysSeries = thirtyDaysData.map(entry => entry.count);
+                        const thirtyDaysLabels = thirtyDaysData.map(entry => entry.symptom);
 
-                    // Fetch symptom data grouped by month and year
-                    const monthlysymptomData = <?php echo json_encode($monthlysymptomResult->fetch_all(MYSQLI_ASSOC)); ?>;
+                        // Fetch symptom data grouped by month and year
+                        const monthlysymptomData = <?php echo json_encode($monthlysymptomResult->fetch_all(MYSQLI_ASSOC)); ?>;
 
-                    // Extract unique months
-                    const uniqueMonths = Array.from(new Set(monthlysymptomData.map(entry => entry.month)));
+                        // Extract unique months
+                        const uniqueMonths = Array.from(new Set(monthlysymptomData.map(entry => entry.month)));
 
-                    const symptomDistributionData = <?php echo json_encode($symptomDistributionData); ?>;
-                    const symptomDistributionLabels = symptomDistributionData.map(entry => entry.symptom);
-                    const symptomDistributionSeries = symptomDistributionData.map(entry => entry.frequency);
-
-              
-                    const normalizeData = (data) => {
-                        const sum = data.reduce((acc, val) => acc + val, 0);
-                        // Normalize the data
-                        return data.map(val => (val / sum) * 100);
-                    };
+                        const symptomDistributionData = <?php echo json_encode($symptomDistributionData); ?>;
+                        const symptomDistributionLabels = symptomDistributionData.map(entry => entry.symptom);
+                        const symptomDistributionSeries = symptomDistributionData.map(entry => entry.frequency);
 
 
-                    const normalizedSymptomseries = normalizeData(Symptomseries);
-                    const normalizedSevenDaysSeries = normalizeData(sevenDaysSeries);
-                    const normalizedThirtyDaysSeries = normalizeData(thirtyDaysSeries);
-                    const normalizedsymptomDistributionSeries = normalizeData(symptomDistributionSeries);
-
-                    // symptom Pie Chart
-                    // symptom Pie Chart
-                    const symptomPieOptions = {
-                        series: normalizedSymptomseries,
-                        chart: {
-                            type: 'pie',
-                            height: 530,
-                        },
-                        labels: symptomLabels,
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
-                        legend: {
-                            position: 'bottom',
-                        },
-                 
-                    };
+                        const normalizeData = (data) => {
+                            const sum = data.reduce((acc, val) => acc + val, 0);
+                            // Normalize the data
+                            return data.map(val => (val / sum) * 100);
+                        };
 
 
-                    this.symptomPieChart = new ApexCharts(this.$refs.symptomPieChart, symptomPieOptions);
-                    this.symptomPieChart.render();
+                        const normalizedSymptomseries = normalizeData(Symptomseries);
+                        const normalizedSevenDaysSeries = normalizeData(sevenDaysSeries);
+                        const normalizedThirtyDaysSeries = normalizeData(thirtyDaysSeries);
+                        const normalizedsymptomDistributionSeries = normalizeData(symptomDistributionSeries);
 
-                    // Seven Days Chart
-                    const sevenDaysOptions = {
-                        series: normalizedSevenDaysSeries,
-                        chart: {
-                            type: 'pie',
-                            height: 530,
-                        },
-                        labels: sevenDaysLabels,
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
-                        legend: {
-                            position: 'bottom',
-                        }
-                    };
-
-                    this.sevenDaysChart = new ApexCharts(this.$refs.sevenDaysChart, sevenDaysOptions);
-                    this.sevenDaysChart.render();
-
-                    // Thirty Days Chart
-                    const thirtyDaysOptions = {
-                        series: normalizedThirtyDaysSeries,
-                        chart: {
-                            type: 'pie',
-                            height: 530,
-                        },
-                        labels: thirtyDaysLabels,
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
-                        legend: {
-                            position: 'bottom',
-                        }
-                    };
-
-                    this.thirtyDaysChart = new ApexCharts(this.$refs.thirtyDaysChart, thirtyDaysOptions);
-                    this.thirtyDaysChart.render();
-
-
-
-                    // Overall symptom Pyramid Chart
-                    const symptomPyramidOptions = {
-                        series: [{
-                            name: "",
-                            data: symptomDistributionSeries, // Use your normalized data here
-                        }],
-                        chart: {
-                            type: 'bar',
-                            height: 530,
-                        },
-                        plotOptions: {
-                            bar: {
-                                borderRadius: 0,
-                                horizontal: true,
-                                distributed: true,
-                                barHeight: '80%',
-                                isFunnel: false,
+                        // symptom Pie Chart
+                        // symptom Pie Chart
+                        const symptomPieOptions = {
+                            series: normalizedSymptomseries,
+                            chart: {
+                                type: 'pie',
+                                height: 530,
                             },
-                        },
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
-                        dataLabels: {
-                            enabled: true,
-                            formatter: function (val, opt) {
-                                return opt.w.globals.labels[opt.dataPointIndex];
+                            labels: symptomLabels,
+                            colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                            legend: {
+                                position: 'bottom',
                             },
-                            dropShadow: {
+
+                        };
+
+
+                        this.symptomPieChart = new ApexCharts(this.$refs.symptomPieChart, symptomPieOptions);
+                        this.symptomPieChart.render();
+
+                        // Seven Days Chart
+                        const sevenDaysOptions = {
+                            series: normalizedSevenDaysSeries,
+                            chart: {
+                                type: 'pie',
+                                height: 530,
+                            },
+                            labels: sevenDaysLabels,
+                            colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                            legend: {
+                                position: 'bottom',
+                            }
+                        };
+
+                        this.sevenDaysChart = new ApexCharts(this.$refs.sevenDaysChart, sevenDaysOptions);
+                        this.sevenDaysChart.render();
+
+                        // Thirty Days Chart
+                        const thirtyDaysOptions = {
+                            series: normalizedThirtyDaysSeries,
+                            chart: {
+                                type: 'pie',
+                                height: 530,
+                            },
+                            labels: thirtyDaysLabels,
+                            colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                            legend: {
+                                position: 'bottom',
+                            }
+                        };
+
+                        this.thirtyDaysChart = new ApexCharts(this.$refs.thirtyDaysChart, thirtyDaysOptions);
+                        this.thirtyDaysChart.render();
+
+
+
+                        // Overall symptom Pyramid Chart
+                        const symptomPyramidOptions = {
+                            series: [{
+                                name: "",
+                                data: symptomDistributionSeries, // Use your normalized data here
+                            }],
+                            chart: {
+                                type: 'bar',
+                                height: 530,
+                            },
+                            plotOptions: {
+                                bar: {
+                                    borderRadius: 0,
+                                    horizontal: true,
+                                    distributed: true,
+                                    barHeight: '80%',
+                                    isFunnel: false,
+                                },
+                            },
+                            colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                            dataLabels: {
                                 enabled: true,
+                                formatter: function (val, opt) {
+                                    return opt.w.globals.labels[opt.dataPointIndex];
+                                },
+                                dropShadow: {
+                                    enabled: true,
+                                },
                             },
-                        },
 
-                        xaxis: {
-                            categories: symptomDistributionLabels,
-                        },
-                        legend: {
-                            show: false,
-                        },
-                    };
+                            xaxis: {
+                                categories: symptomDistributionLabels,
+                            },
+                            legend: {
+                                show: false,
+                            },
+                        };
 
-                    this.symptomPyramidChart = new ApexCharts(this.$refs.symptomPyramidChart, symptomPyramidOptions);
-                    this.symptomPyramidChart.render();
+                        this.symptomPyramidChart = new ApexCharts(this.$refs.symptomPyramidChart, symptomPyramidOptions);
+                        this.symptomPyramidChart.render();
 
-                },
-            }));
-        });
-    </script>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new simpleDatatables.DataTable('#SymptomsTable');
-
-        }
-        );
-
-        async function showAlert(logId) {
-            const swalWithBootstrapButtons = window.Swal.mixin({
-                confirmButtonClass: 'btn btn-secondary',
-                cancelButtonClass: 'btn btn-dark ltr:mr-3 rtl:ml-3',
-                buttonsStyling: false,
+                    },
+                }));
             });
-            swalWithBootstrapButtons
-                .fire({
-                    title: '<div style="text-align: center;">Are you sure?</div>',
-                    // text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Delete',
-                    cancelButtonText: 'Cancel',
-                    reverseButtons: true,
-                    padding: '2em',
-                })
-                .then((result) => {
-                    if (result.value) {
-                        // Pass the logId to the PHP script for deletion
-                        deleteLog(logId);
-                    }
+        </script>
 
-                });
-        }
 
-        async function deleteLog(logId) {
-            const formData = new FormData();
-            formData.append('delete_id', logId);
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
 
-            try {
-                const response = await fetch('<?php echo $_SERVER['PHP_SELF']; ?>', {
-                    method: 'POST',
-                    body: formData
-                });
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                new simpleDatatables.DataTable('#SymptomsTable');
 
-                if (response.ok) {
-
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1500); // Adjust the delay time as needed
-                } else {
-
-                    swalWithBootstrapButtons.fire('Error', 'Failed to delete', 'error');
-                }
-            } catch (error) {
-                swalWithBootstrapButtons.fire('Error', 'An unexpected error occurred.', 'error');
             }
-        }
+            );
+
+            async function showAlert(logId) {
+                const swalWithBootstrapButtons = window.Swal.mixin({
+                    confirmButtonClass: 'btn btn-secondary',
+                    cancelButtonClass: 'btn btn-dark ltr:mr-3 rtl:ml-3',
+                    buttonsStyling: false,
+                });
+                swalWithBootstrapButtons
+                    .fire({
+                        title: '<div style="text-align: center;">Are you sure?</div>',
+                        // text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Delete',
+                        cancelButtonText: 'Cancel',
+                        reverseButtons: true,
+                        padding: '2em',
+                    })
+                    .then((result) => {
+                        if (result.value) {
+                            // Pass the logId to the PHP script for deletion
+                            deleteLog(logId);
+                        }
+
+                    });
+            }
+
+            async function deleteLog(logId) {
+                const formData = new FormData();
+                formData.append('delete_id', logId);
+
+                try {
+                    const response = await fetch('<?php echo $_SERVER['PHP_SELF']; ?>', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500); // Adjust the delay time as needed
+                    } else {
+
+                        swalWithBootstrapButtons.fire('Error', 'Failed to delete', 'error');
+                    }
+                } catch (error) {
+                    swalWithBootstrapButtons.fire('Error', 'An unexpected error occurred.', 'error');
+                }
+            }
 
 
-    </script>
+        </script>
 
 
-    <?php include '../footer-main.php'; ?>
+        <?php include '../footer-main.php'; ?>
