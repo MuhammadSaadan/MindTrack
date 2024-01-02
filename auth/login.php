@@ -141,8 +141,10 @@
 
     $conn->close();
     ?>
-    <div
-        class="flex justify-center items-center min-h-screen bg-[url('/assets/images/map.svg')] dark:bg-[url('/assets/images/map-dark.svg')] bg-cover bg-center">
+    <div class="flex justify-center items-center min-h-screen"
+        style="background-image: url('/assets/images/bglogin.svg'); background-size: cover; background-position: center;"
+        dark:bg-image="url('/assets/images/map-dark.svg')">
+
         <div class="panel sm:w-[480px] m-6 max-w-lg w-full">
             <h2 class="font-bold text-2xl mb-3">Sign In</h2>
             <p class="mb-7">Enter your email and password to login</p>
@@ -153,17 +155,16 @@
                 </div>
                 <div>
                     <label for="password">Password</label>
-                    <input name="password" id="password" type="password"
-                        class="form-input <?php if (isset($errors['password']))
-                            echo 'error-input'; ?>"
-                        placeholder="Enter Password" />
+                    <input name="password" id="password" type="password" class="form-input <?php if (isset($errors['password']))
+                        echo 'error-input'; ?>" placeholder="Enter Password" />
                 </div>
                 <button type="submit" class="btn btn-primary w-full">SIGN IN</button>
             </form>
             <div
                 class="relative my-7 h-5 text-center before:w-full before:h-[1px] before:absolute before:inset-0 before:m-auto before:bg-[#ebedf2] dark:before:bg-[#253b5c]">
                 <div class="font-bold text-white-dark bg-white dark:bg-[#0e1726] px-2 relative z-[1] inline-block">
-                    <span>OR</span></div>
+                    <span>OR</span>
+                </div>
             </div>
             <p class="text-center">Don't have an account? <a href="/auth/boxed-signup.php"
                     class="text-primary font-bold hover:underline">Sign Up</a></p>

@@ -181,7 +181,7 @@ include '../header-main.php';
     <div
         class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-6 text-center flex flex-col justify-center">
 
-        <h3 class="text-2xl font-semibold mb-4 text-white-light text-[5px] text-center">
+        <h3 class="text-2xl font-semibold mb-4 text-white-light text-[5px;] text-center">
             <?php echo $sentence; ?>
         </h3>
     </div>
@@ -297,6 +297,30 @@ include '../header-main.php';
                     const normalizedSymptomseries = normalizeData(Symptomseries);
                     const normalizedSeverityeries = normalizeData(Severityeries);
 
+                    const moodColorMapping = {
+                        'Happy': '#4361ee',
+                        'Sad': '#805dca',
+                        'Relaxed': '#00ab55',
+                        'Angry': '#e7515a',
+                        'Anxious': '#ffd700', 
+                    };
+
+                    const symptomColorMapping = {
+                        'Insomnia': '#4361ee', 
+                        'Fatigue': '#805dca', 
+                        'Nausea': '#00ab55', 
+                        'Headache': '#e7515a', 
+                        'Anxiety': '#ffd700', 
+                    };
+
+                    const severityColorMapping = {
+                        'Minimal or none': '#4361ee',
+                        'Moderate': '#805dca',
+                        'Mild': '#00ab55',
+                        'Severe': '#e7515a',
+                        'Moderately severe': '#ffd700', 
+                    }; 
+
 
                     // Mood Pie Chart
                     const moodPieOptions = {
@@ -306,7 +330,7 @@ include '../header-main.php';
                             height: 530,
                         },
                         labels: moodLabels,
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                        colors: moodLabels.map(label => moodColorMapping[label] || '#000000'), // Use the color mapping 
                         legend: {
                             position: 'bottom',
                         },
@@ -337,7 +361,7 @@ include '../header-main.php';
                                 isFunnel: false,
                             },
                         },
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                        colors: moodDistributionLabels.map(label => moodColorMapping[label] || '#000000'), // Use the color mapping 
                         dataLabels: {
                             enabled: true,
                             formatter: function (val, opt) {
@@ -368,7 +392,7 @@ include '../header-main.php';
                             height: 530,
                         },
                         labels: symptomLabels,
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                        colors: symptomLabels.map(label => symptomColorMapping[label] || '#000000'), // Use the color mapping 
                         legend: {
                             position: 'bottom',
                         },
@@ -399,7 +423,7 @@ include '../header-main.php';
                                 isFunnel: false,
                             },
                         },
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                        colors: symptomDistributionLabels.map(label => symptomColorMapping[label] || '#000000'), // Use the color 
                         dataLabels: {
                             enabled: true,
                             formatter: function (val, opt) {
@@ -430,7 +454,7 @@ include '../header-main.php';
                             height: 530,
                         },
                         labels: severityLabels,
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                        colors: severityLabels.map(label => severityColorMapping[label] || '#000000'), // Use the color mapping 
                         legend: {
                             position: 'bottom',
                         },
@@ -459,7 +483,7 @@ include '../header-main.php';
                                 isFunnel: false,
                             },
                         },
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                        colors: severityDistributionLabels.map(label => severityColorMapping[label] || '#000000'), // Use the color mapping 
                         dataLabels: {
                             enabled: true,
                             formatter: function (val, opt) {
@@ -505,7 +529,7 @@ include '../header-main.php';
                                 endingShape: 'rounded',
                             },
                         },
-                        colors: ['#4361ee', '#805dca', '#00ab55'],
+                        colors: colorPalette, 
                         dataLabels: {
                             enabled: true,
                             formatter: function (val, { seriesIndex }) {

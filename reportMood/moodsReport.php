@@ -201,67 +201,70 @@ include '../header-main.php';
 
     <br>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-    <!-- overall mood pie chart -->
-    <div x-ref="moodPieChart" class="bg-white dark:bg-black rounded-lg">
-        <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Overall Mood</p>
-        <div x-ref="moodPieChart" style="height: 300px;"></div>
+        <!-- overall mood pie chart -->
+        <div x-ref="moodPieChart" class="bg-white dark:bg-black rounded-lg">
+            <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Overall Mood</p>
+            <div x-ref="moodPieChart" style="height: 300px;"></div>
+        </div>
+
+        <div
+            class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-6 text-center flex flex-col justify-center">
+
+            <h3 class="text-2xl font-semibold mb-4 text-white-light text-[5px;] text-center">
+                <?php echo "Your overall mood is,"; ?>
+            </h3>
+            <h3 class="text-5xl font-semibold mb-4 text-white-light text-[5px;] text-center">
+                <?php echo isset($highestFrequencyOverall['mood']) ? $highestFrequencyOverall['mood'] : 'No data recorded'; ?>
+            </h3>
+            <p class="text-white-light text-[1.5em] mb-3.5 text-center"></p>
+        </div>
+
+        <!-- 7 days -->
+        <div x-ref="sevenDaysChart" class="bg-white dark:bg-black rounded-lg">
+            <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Your Frequent Moods (7 Days)</p>
+            <div x-ref="sevenDaysChart" style="height: 300px;"></div>
+        </div>
+        <div
+            class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-6 text-center flex flex-col justify-center">
+
+            <h3 class="text-2xl font-semibold mb-4 text-white-light text-[5px;] text-center">
+                You have been feeling,
+            </h3>
+            <h3 class="text-5xl font-semibold mb-4 text-white-light text-[5px;] text-center">
+                <?php echo isset($highestFrequency7Days['mood']) ? $highestFrequency7Days['mood'] : 'No data recorded'; ?>
+            </h3>
+            <h3 class="text-2xl font-semibold mb-4 text-white-light text-[5px;] text-center">
+                for the past week.
+            </h3>
+            <p class="text-white-light text-[1.5em] mb-3.5 text-center"></p>
+        </div>
+
+        <!-- 30 days -->
+        <div x-ref="thirtyDaysChart" class="bg-white dark:bg-black rounded-lg">
+            <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Your Frequent Moods (30 Days)</p>
+            <div x-ref="thirtyDaysChart" style="height: 300px;"></div>
+        </div>
+        <div
+            class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-6 text-center flex flex-col justify-center">
+
+            <h3 class="text-2xl font-semibold mb-4 text-white-light text-[5px;] text-center">
+                You have been feeling,
+            </h3>
+            <h3 class="text-5xl font-semibold mb-4 text-white-light text-[5px;] text-center">
+                <?php echo isset($highestFrequency30Days['mood']) ? $highestFrequency30Days['mood'] : 'No data recorded'; ?>
+            </h3>
+            <h3 class="text-2xl font-semibold mb-4 text-white-light text-[5px;] text-center">
+                for the past month.
+            </h3>
+            <p class="text-white-light text-[1.5em] mb-3.5 text-center"></p>
+        </div>
     </div>
+    <br>
 
-    <div class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-6 text-center flex flex-col justify-center">
-
-        <h3 class="text-2xl font-semibold mb-4 text-white-light text-[0.5em] text-center">
-            <?php echo "Your overall mood is,"; ?>
-        </h3>
-        <h3 class="text-5xl font-semibold mb-4 text-white-light text-[0.5em] text-center">
-            <?php echo isset($highestFrequencyOverall['mood']) ? $highestFrequencyOverall['mood'] : 'No data recorded'; ?>
-        </h3>
-        <p class="text-white-light text-[1.5em] mb-3.5 text-center"></p>
+    <div x-ref="moodPyramidChart" class="bg-white dark:bg-black rounded-lg">
+        <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Overall Mood Chart</p>
+        <div x-ref="moodPyramidChart" style="height: 300px;"></div>
     </div>
-
-    <!-- 7 days -->
-    <div x-ref="sevenDaysChart" class="bg-white dark:bg-black rounded-lg">
-        <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Your Frequent Moods (7 Days)</p>
-        <div x-ref="sevenDaysChart" style="height: 300px;"></div>
-    </div>
-    <div class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-6 text-center flex flex-col justify-center">
-
-        <h3 class="text-2xl font-semibold mb-4 text-white-light text-[0.5em] text-center">
-            You have been feeling,
-        </h3>
-        <h3 class="text-5xl font-semibold mb-4 text-white-light text-[0.5em] text-center">
-            <?php echo isset($highestFrequency7Days['mood']) ? $highestFrequency7Days['mood'] : 'No data recorded'; ?>
-        </h3>
-        <h3 class="text-2xl font-semibold mb-4 text-white-light text-[0.5em] text-center">
-            for the past week.
-        </h3>
-        <p class="text-white-light text-[1.5em] mb-3.5 text-center"></p>
-    </div>
-
-    <!-- 30 days -->
-    <div x-ref="thirtyDaysChart" class="bg-white dark:bg-black rounded-lg">
-        <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Your Frequent Moods (30 Days)</p>
-        <div x-ref="thirtyDaysChart" style="height: 300px;"></div>
-    </div>
-    <div class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-6 text-center flex flex-col justify-center">
-
-        <h3 class="text-2xl font-semibold mb-4 text-white-light text-[0.5em] text-center">
-            You have been feeling,
-        </h3>
-        <h3 class="text-5xl font-semibold mb-4 text-white-light text-[0.5em] text-center">
-            <?php echo isset($highestFrequency30Days['mood']) ? $highestFrequency30Days['mood'] : 'No data recorded'; ?>
-        </h3>
-        <h3 class="text-2xl font-semibold mb-4 text-white-light text-[0.5em] text-center">
-            for the past month.
-        </h3>
-        <p class="text-white-light text-[1.5em] mb-3.5 text-center"></p>
-    </div>
-</div>
-<br>
-
-<div x-ref="moodPyramidChart" class="bg-white dark:bg-black rounded-lg">
-    <p class="lead mt-4 text-center text-lg text-gray-600 dark:text-gray-400">Overall Mood Chart</p>
-    <div x-ref="moodPyramidChart" style="height: 300px;"></div>
-</div>
     <br>
 
     <div class="panel">
@@ -361,7 +364,7 @@ include '../header-main.php';
                     const moodDistributionLabels = moodDistributionData.map(entry => entry.mood);
                     const moodDistributionSeries = moodDistributionData.map(entry => entry.frequency);
 
-              
+
                     const normalizeData = (data) => {
                         const sum = data.reduce((acc, val) => acc + val, 0);
                         // Normalize the data
@@ -374,6 +377,13 @@ include '../header-main.php';
                     const normalizedThirtyDaysSeries = normalizeData(thirtyDaysSeries);
                     const normalizedMoodDistributionSeries = normalizeData(moodDistributionSeries);
 
+                    const moodColorMapping = {
+                        'Happy': '#4361ee',
+                        'Sad': '#805dca',
+                        'Relaxed': '#00ab55',
+                        'Angry': '#e7515a',
+                        'Anxious': '#ffd700', 
+                    };
                     // Mood Pie Chart
                     // Mood Pie Chart
                     const moodPieOptions = {
@@ -383,11 +393,12 @@ include '../header-main.php';
                             height: 530,
                         },
                         labels: moodLabels,
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                        colors: moodLabels.map(label => moodColorMapping[label] || '#000000'), // Use the color mapping
+
                         legend: {
                             position: 'bottom',
                         },
-                 
+
                     };
 
 
@@ -402,7 +413,8 @@ include '../header-main.php';
                             height: 530,
                         },
                         labels: sevenDaysLabels,
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                        colors: moodLabels.map(label => moodColorMapping[label] || '#000000'), // Use the color mapping
+
                         legend: {
                             position: 'bottom',
                         }
@@ -419,7 +431,8 @@ include '../header-main.php';
                             height: 530,
                         },
                         labels: thirtyDaysLabels,
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                        colors: moodLabels.map(label => moodColorMapping[label] || '#000000'), // Use the color mapping
+
                         legend: {
                             position: 'bottom',
                         }
@@ -449,7 +462,8 @@ include '../header-main.php';
                                 isFunnel: false,
                             },
                         },
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                        colors: moodDistributionLabels.map(label => moodColorMapping[label] || '#000000'), // Use the color mapping
+
                         dataLabels: {
                             enabled: true,
                             formatter: function (val, opt) {

@@ -179,7 +179,8 @@ $conn->close();
     <form method="post" action="/selfTest/index.php" id="phqForm">
         <div class="question">
             <div class="panel">
-                <label>Little interest or pleasure in doing things?</label>
+                <label style="font-weight: bold; font-size: larger;">Little interest or pleasure in doing
+                    things?</label>
                 </br>
                 <p>
                     <label><input type="radio" name="q1" value="0" required> Not at all</label><br>
@@ -193,7 +194,7 @@ $conn->close();
         <div class="question">
             <div class="panel">
 
-                <label>Feeling down, depressed, or hopeless?</label>
+                <label style="font-weight: bold; font-size: larger;">Feeling down, depressed, or hopeless?</label>
                 </br>
 
                 <p>
@@ -209,7 +210,8 @@ $conn->close();
         <div class="question">
             <div class="panel">
 
-                <label>Trouble falling or staying asleep, or sleeping too much?</label>
+                <label style="font-weight: bold; font-size: larger;">Trouble falling or staying asleep, or sleeping too
+                    much?</label>
                 </br>
 
                 <p>
@@ -226,7 +228,7 @@ $conn->close();
         <div class="question">
             <div class="panel">
 
-                <label>Feeling tired or having little energy?</label>
+                <label style="font-weight: bold; font-size: larger;">Feeling tired or having little energy?</label>
                 </br>
 
                 <p>
@@ -243,7 +245,7 @@ $conn->close();
         <div class="question">
             <div class="panel">
 
-                <label>Poor appetite or overeating?</label>
+                <label style="font-weight: bold; font-size: larger;">Poor appetite or overeating?</label>
                 </br>
 
                 <p>
@@ -260,7 +262,8 @@ $conn->close();
         <div class="question">
             <div class="panel">
 
-                <label>Feeling bad about yourself or that you are a failure or have let yourself or your family
+                <label style="font-weight: bold; font-size: larger;">Feeling bad about yourself or that you are a
+                    failure or have let yourself or your family
                     down?</label>
                 </br>
 
@@ -278,7 +281,8 @@ $conn->close();
         <div class="question">
             <div class="panel">
 
-                <label>Trouble concentrating on things, such as reading the newspaper or watching
+                <label style="font-weight: bold; font-size: larger;">Trouble concentrating on things, such as reading
+                    the newspaper or watching
                     television?</label>
 
                 </br>
@@ -297,7 +301,8 @@ $conn->close();
         <div class="question">
             <div class="panel">
 
-                <label>Moving or speaking so slowly that other people could have noticed? Or the opposite: being
+                <label style="font-weight: bold; font-size: larger;">Moving or speaking so slowly that other people
+                    could have noticed? Or the opposite: being
                     so
                     fidgety or restless that you have been moving around a lot more than usual?</label>
                 </br>
@@ -316,7 +321,8 @@ $conn->close();
         <div class="question">
             <div class="panel">
 
-                <label>Thoughts that you would be better off dead or of hurting yourself?</label>
+                <label style="font-weight: bold; font-size: larger;">Thoughts that you would be better off dead or of
+                    hurting yourself?</label>
                 <p>
                     </br>
 
