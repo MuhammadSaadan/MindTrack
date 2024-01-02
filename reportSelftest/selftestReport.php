@@ -211,10 +211,10 @@ include '../header-main.php';
 
         <div
             class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-1rem text-center flex flex-col justify-center">
-            <h3 class="text-2xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
+            <h3 class="text-2xl font-semibold mb-1rem text-white-light text-[5px;] text-center">
                 <?php echo "Your overall severity is,"; ?>
             </h3>
-            <h3 class="text-5xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
+            <h3 class="text-5xl font-semibold mb-1rem text-white-light text-[5px;] text-center">
                 <?php echo isset($highestFrequencyOverall['severity']) ? $highestFrequencyOverall['severity'] : 'No data recorded'; ?>
             </h3>
             <p class="text-white-light text-[0.9375rem] mb-0.21875rem text-center"></p>
@@ -228,13 +228,13 @@ include '../header-main.php';
         </div>
         <div
             class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-1rem text-center flex flex-col justify-center">
-            <h3 class="text-2xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
-                You have been feeling,
+            <h3 class="text-2xl font-semibold mb-1rem text-white-light text-[5px;] text-center">
+                Your Severity is,
             </h3>
-            <h3 class="text-5xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
+            <h3 class="text-5xl font-semibold mb-1rem text-white-light text-[5px;] text-center">
                 <?php echo isset($highestFrequency7Days['severity']) ? $highestFrequency7Days['severity'] : 'No data recorded'; ?>
             </h3>
-            <h3 class="text-2xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
+            <h3 class="text-2xl font-semibold mb-1rem text-white-light text-[5px;] text-center">
                 for the past week.
             </h3>
             <p class="text-white-light text-[0.9375rem] mb-0.21875rem text-center"></p>
@@ -249,12 +249,12 @@ include '../header-main.php';
         <div
             class="bg-dark border border-gray-500/20 rounded-md shadow-[rgb(31_45_61_/_10%)_0px_2px_10px_1px] dark:shadow-[0_2px_11px_0_rgb(6_8_24_/_39%)] p-1rem text-center flex flex-col justify-center">
             <h3 class="text-2xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
-                You have been feeling,
+                Your Severity is,
             </h3>
-            <h3 class="text-5xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
+            <h3 class="text-5xl font-semibold mb-1rem text-white-light text-[5px;] text-center">
                 <?php echo isset($highestFrequency30Days['severity']) ? $highestFrequency30Days['severity'] : 'No data recorded'; ?>
             </h3>
-            <h3 class="text-2xl font-semibold mb-1rem text-white-light text-[0.3125rem] text-center">
+            <h3 class="text-2xl font-semibold mb-1rem text-white-light text-[5px;] text-center">
                 for the past month.
             </h3>
             <p class="text-white-light text-[0.9375rem] mb-0.21875rem text-center"></p>
@@ -378,7 +378,13 @@ include '../header-main.php';
                     const normalizedThirtyDaysSeries = normalizeData(thirtyDaysSeries);
                     const normalizedseverityDistributionSeries = normalizeData(severityDistributionSeries);
 
-                    // severity Pie Chart
+                    const severityColorMapping = {
+                        'Minimal or none': '#4361ee',
+                        'Moderate': '#805dca',
+                        'Mild': '#00ab55',
+                        'Severe': '#e7515a',
+                        'Moderately severe': '#ffd700', 
+                    };                   
                     // severity Pie Chart
                     const severityPieOptions = {
                         series: normalizedSeverityeries,
@@ -387,7 +393,7 @@ include '../header-main.php';
                             height: 530,
                         },
                         labels: severityLabels,
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                        colors: severityLabels.map(label => severityColorMapping[label] || '#000000'), // Use the color mapping 
                         legend: {
                             position: 'bottom',
                         },
@@ -406,7 +412,7 @@ include '../header-main.php';
                             height: 530,
                         },
                         labels: sevenDaysLabels,
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                        colors: severityLabels.map(label => severityColorMapping[label] || '#000000'), // Use the color mapping 
                         legend: {
                             position: 'bottom',
                         }
@@ -423,7 +429,7 @@ include '../header-main.php';
                             height: 530,
                         },
                         labels: thirtyDaysLabels,
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                        colors: severityLabels.map(label => severityColorMapping[label] || '#000000'), // Use the color mapping 
                         legend: {
                             position: 'bottom',
                         }
@@ -453,7 +459,7 @@ include '../header-main.php';
                                 isFunnel: false,
                             },
                         },
-                        colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f'],
+                        colors: severityDistributionLabels.map(label => severityColorMapping[label] || '#000000'), // Use the color mapping 
                         dataLabels: {
                             enabled: true,
                             formatter: function (val, opt) {
