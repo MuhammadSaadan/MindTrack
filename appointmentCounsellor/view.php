@@ -1,32 +1,37 @@
 <?php
-require '../config.php';
-include '../header-main.php';
-
+require '../dashboardCounsellor/config.php';
+include '../dashboardCounsellor/header-main.php';
 ?>
+
 
 <!-- Include SimpleDataTables CSS -->
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
 
 <?php
-$log_moods = array();
+$log_appointments = array();
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $user_id = $_SESSION['user_id'];
+    $counselor_id = $_SESSION['counselor_id']; // Assuming you have a session variable for counselor ID
 
-    $sql = "SELECT * FROM log_mood WHERE user_id = $user_id ORDER BY log_id ASC";
+    $sql = "SELECT appointments.*, users.name AS user_name, users.phone AS user_phone, counselors.name AS counselor_name
+    FROM appointments
+    INNER JOIN users ON appointments.user_id = users.id
+    INNER JOIN counselors ON appointments.counselor_id = counselors.id
+    WHERE appointments.counselor_id = $counselor_id
+    ORDER BY appointments.id ASC";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $log_moods[] = $row;
+            $log_appointments[] = $row;
         }
     }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
-    $logId = $_POST['delete_id'];
+    $logappointments = $_POST['delete_id'];
 
-    $stmt = $conn->prepare("DELETE FROM log_mood WHERE log_id = ?");
-    $stmt->bind_param("i", $logId);
+    $stmt = $conn->prepare("DELETE FROM appointments WHERE id = ?");
+    $stmt->bind_param("i", $logappointments);
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {
@@ -55,7 +60,7 @@ if (isset($_SESSION['deletion_success']) && $_SESSION['deletion_success'] === tr
             }
         });
         toast.fire({
-            title: 'Mood Updated',
+            title: 'Appointment Updated',
             icon: 'success'
         });
     </script>";
@@ -79,17 +84,15 @@ if (isset($_GET['updateSuccess']) && $_GET['updateSuccess'] == 'true') {
                 }
             });
             toast.fire({
-                title: 'Mood Updated',
+                title: 'Appointment Updated',
                 icon: 'success'
             });
         };
         coloredToast();
     </script>";
-
     unset($_SESSION['updateSuccess']); // Clear the success message
 
 }
-
 
 $conn->close();
 ?>
@@ -97,62 +100,111 @@ $conn->close();
 
 <!-- arrowed -->
 <ol class="flex text-primary font-semibold dark:text-white-dark">
-    <li class="bg-[#ebedf2] rounded-tl-md rounded-bl-md dark:bg-[#1b2e4b]"><a href="/dashboardUser/dashboard.php"
+    <li class="bg-[#ebedf2] rounded-tl-md rounded-bl-md dark:bg-[#1b2e4b]"><a href="../dashboardCounsellor/dashboard.php"
             class="p-1.5 ltr:pl-3 rtl:pr-3 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70">Dashboard</a>
     </li>
-    <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"><a href="/moodTracking/index.php"
-            class="p-1.5 px-3 ltr:pl-6 rtl:pr-6 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70">Mood
-            Tracking</a></li>
     <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"><a
-            class="bg-primary text-white-light p-1.5 ltr:pl-6 rtl:pr-6 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary before:z-[1]">View
-            Logged Moods</a></li>
+            class="bg-primary text-white-light p-1.5 ltr:pl-6 rtl:pr-6 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary before:z-[1]">Manage Appointment</a></li>
+   
 </ol>
 <br>
 
-<div class="panel">
+<style>
+    .appointment-grid {
+        display: flex;
+        flex-wrap: wrap;
+    }
 
+    .appointment-card {
+        flex: 0 0 calc(19rem - 20px);
+        margin-bottom: 20px;
+        margin-right: 20px;
+        /* Add this line */
+    }
+
+    .appointment-card:last-child {
+        margin-right: 0;
+        /* Remove right margin for the last item */
+    }
+</style>
+
+<div class="panel">
+    <div class="flex items-center space-x-4">
+        <h5 class="text-lg text-gray-600 dark:text-gray-400"><strong>Upcoming Appointments</strong></h5>
+    </div>
+</div>
+<br>
+
+<div class="appointment-grid">
+    <?php foreach ($log_appointments as $appointment): ?>
+        <?php if ($appointment['status'] !== 'Completed'): ?>
+            <div
+                class="appointment-card bg-white shadow-[4px_6px_10px_-3px_#bfc9d4] rounded border border-[#e0e6ed] dark:border-[#1b2e4b] dark:bg-[#191e3a] dark:shadow-none">
+                <div class="py-7 px-6">
+                    <h5 class="text-[#3b3f5c] text-xl font-semibold mb-4 dark:text-white-light">
+                        <?= $appointment['user_name'] ?>
+                    </h5>
+                    <p class="text-white-dark">
+                        Date:
+                        <?= $appointment['date'] ?><br>
+                        Time:
+                        <?= $appointment['time'] ?><br>
+                        Status:
+                        <?= $appointment['status'] ?>
+                    </p>
+                    <br>
+                    <!-- Add Cancel Button -->
+
+                    
+                    <a href="../appointmentCounsellor/edit.php?edit_id=<?= $appointment['id'] ?>"
+                       class="btn btn-primary btn-sm mr-2">Update Status</a>
+                </div>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</div>
+
+<div class="panel">
     <div class="table-responsive">
         <table id="moodsTable" class="table">
             <thead>
                 <tr>
                     <th>No.</th>
-                    <th>Mood</th>
-                    <th>Description</th>
-                    <th>Intensity Level</th>
-                    <th>Date and Time</th>
-                    <th class="text-center">Action</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Counselor</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $currentNumber = 1; // Initialize the counter for row numbering
                 
-                foreach ($log_moods as $mood):
+                foreach ($log_appointments as $set):
                     ?>
-                    <tr id="row-<?= $mood['log_id'] ?>">
+                    <tr id="row-<?= $set['id'] ?>">
                         <td>
                             <?= $currentNumber ?>
+                        </td> <!-- Display the current row number -->
+                        <td>
+                            <?= $set['user_name'] ?>
                         </td>
                         <td>
-                            <?= $mood['mood'] ?>
+                            <?= $set['user_phone'] ?>
                         </td>
                         <td>
-                            <?= $mood['description'] ?>
+                            <?= $set['date'] ?>
                         </td>
                         <td>
-                            <?= $mood['rating'] ?>
+                            <?= $set['time'] ?>
                         </td>
                         <td>
-                            <?= $mood['logged_at'] ?>
+                            <?= $set['counselor_name'] ?>
                         </td>
-                        <td class="p-3 border-b border-[#ebedf2] dark:border-[#191e3a] text-center">
-                            <div style="display: flex; gap: 10px;">
-                                <a href="/moodTracking/edit.php?edit_id=<?= $mood['log_id'] ?>"
-                                    class="btn btn-primary btn-sm mr-2">Edit</a>
-
-                                <button type="button" class="btn btn-danger btn-sm"
-                                    onclick="showAlert(<?= $mood['log_id'] ?>)">Delete</button>
-                            </div>
+                        <td>
+                            <?= $set['status'] ?>
                         </td>
                     </tr>
                     <?php
@@ -164,67 +216,64 @@ $conn->close();
     </div>
 </div>
 
+<?php include '../footer-main.php'; ?>
 
+<!-- Include SimpleDataTables JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         new simpleDatatables.DataTable('#moodsTable');
-
     }
     );
 
-    async function showAlert(logId) {
+    function showAlert(appointmentId) {
         const swalWithBootstrapButtons = window.Swal.mixin({
-            confirmButtonClass: 'btn btn-secondary',
+            confirmButtonClass: 'btn btn-danger',
             cancelButtonClass: 'btn btn-dark ltr:mr-3 rtl:ml-3',
             buttonsStyling: false,
         });
+
         swalWithBootstrapButtons
             .fire({
                 title: '<div style="text-align: center;">Are you sure?</div>',
-                // text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Delete',
-                cancelButtonText: 'Cancel',
+                confirmButtonText: 'Cancel Appointment',
+                cancelButtonText: 'Back',
                 reverseButtons: true,
                 padding: '2em',
             })
             .then((result) => {
                 if (result.value) {
-                    // Pass the logId to the PHP script for deletion
-                    deleteLog(logId);
+                    // Pass the appointmentId to the PHP script for cancellation
+                    deleteAppointment(appointmentId);
                 }
-
             });
     }
 
-    async function deleteLog(logId) {
+    async function deleteAppointment(appointmentId) {
         const formData = new FormData();
-        formData.append('delete_id', logId);
+        formData.append('delete_id', appointmentId);
 
         try {
             const response = await fetch('<?php echo $_SERVER['PHP_SELF']; ?>', {
                 method: 'POST',
-                body: formData
+                body: formData,
             });
 
             if (response.ok) {
-
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1500); // Adjust the delay time as needed
+                // If cancellation was successful, display the success message
+                window.location.reload();
             } else {
-
-                swalWithBootstrapButtons.fire('Error', 'Failed to delete', 'error');
+                // If cancellation failed, display an error message
+                swalWithBootstrapButtons.fire('Error', 'Failed to cancel appointment', 'error');
             }
         } catch (error) {
+            // Handle any unexpected errors
             swalWithBootstrapButtons.fire('Error', 'An unexpected error occurred.', 'error');
         }
     }
-
-
 </script>
 
 <?php include '../footer-main.php'; ?>

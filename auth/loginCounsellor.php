@@ -31,8 +31,8 @@
         } elseif (empty($password)) {
             echo "Password is required.";
         } else {
-            // SQL query to retrieve user from the database using the provided email
-            $sql = "SELECT * FROM users WHERE email = ?";
+            // SQL query to retrieve counselor from the database using the provided email
+            $sql = "SELECT * FROM counselors WHERE email = ?";
             $stmt = $conn->prepare($sql);
 
             if ($stmt) {
@@ -41,23 +41,15 @@
                 $result = $stmt->get_result();
 
                 if ($result->num_rows > 0) {
-                    $user = $result->fetch_assoc();
+                    $counselor = $result->fetch_assoc();
 
                     // Verify the password
-                    if (password_verify($password, $user['password'])) {
-                        // Password matches, set user session and redirect based on role
-                        $_SESSION['user_id'] = $user['id'];
-
-                        // Check user role and redirect accordingly
-                        if ($user['usertype'] === 'admin') {
-                            $_SESSION['user_type'] = 'admin'; // Set user type here for admin
-                            echo '<script>window.location.replace("/dashboardAdmin/dashboard.php");</script>';
-                            exit;
-                        } else {
-                            $_SESSION['user_type'] = 'user'; // Set user type here for a regular user
-                            echo '<script>window.location.replace("/dashboardUser/dashboard.php");</script>';
-                            exit;
-                        }
+                    if (password_verify($password, $counselor['password'])) {
+                        // Password matches, set counselor session and redirect
+                        $_SESSION['counselor_id'] = $counselor['id'];
+                        $_SESSION['user_type'] = 'counselor'; // Set user type for a counselor
+                        echo '<script>window.location.replace("/dashboardCounsellor/dashboard.php");</script>';
+                        exit;
                     } else {
                         echo "
                     <script src='https://cdn.jsdelivr.net/npm/sweetalert2@10'></script>
@@ -136,7 +128,6 @@
         coloredToast();
     </script>";
         unset($_SESSION['updateSuccess']); // Clear the success message
-    
     }
 
     $conn->close();
@@ -146,9 +137,9 @@
         dark:bg-image="url('/assets/images/map-dark.svg')">
 
         <div class="panel sm:w-[480px] m-6 max-w-lg w-full">
-            <h2 class="font-bold text-2xl mb-3">Sign In</h2>
+            <h2 class="font-bold text-2xl mb-3">Counsellor Sign In</h2>
             <p class="mb-7">Enter your email and password to login</p>
-            <form method="post" action="/auth/login.php" class="space-y-5" onsubmit="return validateForm()">
+            <form method="post" action="/auth/loginCounsellor.php" class="space-y-5" onsubmit="return validateForm()">
                 <div>
                     <label for="email">Email</label>
                     <input name="email" id="email" type="email" class="form-input" placeholder="Enter Email" />
@@ -162,15 +153,7 @@
             </form>
             <div
                 class="relative my-7 h-5 text-center before:w-full before:h-[1px] before:absolute before:inset-0 before:m-auto before:bg-[#ebedf2] dark:before:bg-[#253b5c]">
-                <div class="font-bold text-white-dark bg-white dark:bg-[#0e1726] px-2 relative z-[1] inline-block">
-                    <span>OR</span>
-                </div>
             </div>
-            <p class="text-center">Don't have an account? <a href="/auth/boxed-signup.php"
-                    class="text-primary font-bold hover:underline">Sign Up</a></p>
-                    <br>
-                    <p class="text-center"> <a href="/auth/index.php"
-                    class="text-primary font-bold hover:underline">Change User</a></p>
         </div>
     </div>
 

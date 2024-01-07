@@ -161,8 +161,8 @@ $conn->close();
                     </p>
                     <br>
                     <!-- Add Cancel Button -->
-                    <button type="button" class="btn btn-danger btn-sm" onclick="showAlert(<?= $appointment['id'] ?>)">Cancel
-                        Appointment</button>
+                    <a class="btn btn-danger btn-sm" onclick="showAlert(<?= $appointment['id'] ?>)">Cancel
+                        Appointment</a>
                 </div>
             </div>
         <?php endif; ?>

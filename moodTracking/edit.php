@@ -42,9 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt) {
         $stmt->bind_param("sssi", $mood, $description, $rating, $edit_id);
         if ($stmt->execute()) {
-       
 
-            header("Location: /moodTracking/view.php?updateSuccess=true");
+            header("Location: /moodTracking/view.php?updateSuccess=true&edit_id=$edit_id");
             exit;
 
         } else {

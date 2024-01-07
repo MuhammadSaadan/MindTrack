@@ -59,6 +59,28 @@ if (isset($_SESSION['counselor_deletion_success']) && $_SESSION['counselor_delet
     unset($_SESSION['counselor_deletion_success']); // Clear the success message
 }
 
+
+if (isset($_SESSION['counselor_registration_success']) && $_SESSION['counselor_registration_success'] === true) {
+    echo "
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@10'></script>
+    <script>
+        const toast = window.Swal.mixin({
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 3000,
+            showCloseButton: true,
+            customClass: {
+                popup: 'background-color: #5cb85c; color: white; border-radius: 5px;'
+            }
+        });
+        toast.fire({
+            title: 'Counselor Registered Successfully',
+            icon: 'success'
+        });
+    </script>";
+    unset($_SESSION['counselor_registration_success']); // Clear the success message
+}
 $conn->close();
 ?>
 

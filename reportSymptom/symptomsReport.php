@@ -358,10 +358,8 @@ include '../header-main.php';
                     const thirtyDaysSeries = thirtyDaysData.map(entry => entry.count);
                     const thirtyDaysLabels = thirtyDaysData.map(entry => entry.symptom);
 
-                    // Fetch symptom data grouped by month and year
                     const monthlysymptomData = <?php echo json_encode($monthlysymptomResult->fetch_all(MYSQLI_ASSOC)); ?>;
 
-                    // Extract unique months
                     const uniqueMonths = Array.from(new Set(monthlysymptomData.map(entry => entry.month)));
 
                     const symptomDistributionData = <?php echo json_encode($symptomDistributionData); ?>;
@@ -371,7 +369,6 @@ include '../header-main.php';
 
                     const normalizeData = (data) => {
                         const sum = data.reduce((acc, val) => acc + val, 0);
-                        // Normalize the data
                         return data.map(val => (val / sum) * 100);
                     };
 

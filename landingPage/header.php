@@ -38,7 +38,7 @@
                 </div>
  <!-- Primary Button (Sign In) -->
                 <!-- Primary Button (Sign In) -->
-                <a href="/auth/login.php" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark transition-all duration-300">Sign In</a>
+                <a href="/auth/index.php" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark transition-all duration-300">Sign In</a>
 
                 <!-- Primary Button (Sign Up) with Outline -->
                 <a href="/auth/boxed-signup.php" class="px-4 py-2 text-primary border border-primary rounded hover:bg-primary-dark transition-all duration-300">Sign Up</a>
