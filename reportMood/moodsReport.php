@@ -3,6 +3,8 @@
 
 session_start();
 include '../connect.php'; // Include the connection file
+include '../header-main.php';
+
 
 
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_type'])) {
@@ -164,7 +166,6 @@ if (isset($_GET['updateSuccess']) && $_GET['updateSuccess'] == 'true') {
 
 
 $conn->close();
-include '../header-main.php';
 
 ?>
 

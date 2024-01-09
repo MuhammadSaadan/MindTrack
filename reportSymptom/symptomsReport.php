@@ -3,6 +3,8 @@
 
 session_start();
 include '../connect.php'; // Include the connection file
+include '../header-main.php';
+
 
 
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_type'])) {
@@ -128,7 +130,7 @@ if (isset($_SESSION['deletion_success']) && $_SESSION['deletion_success'] === tr
             }
         });
         toast.fire({
-            title: 'symptom Updated',
+            title: 'Symptom Updated',
             icon: 'success'
         });
     </script>";
@@ -152,7 +154,7 @@ if (isset($_GET['updateSuccess']) && $_GET['updateSuccess'] == 'true') {
                 }
             });
             toast.fire({
-                title: 'symptom Updated',
+                title: 'Symptom Updated',
                 icon: 'success'
             });
         };
@@ -164,7 +166,6 @@ if (isset($_GET['updateSuccess']) && $_GET['updateSuccess'] == 'true') {
 
 
 $conn->close();
-include '../header-main.php';
 
 ?>
 

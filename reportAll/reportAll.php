@@ -84,18 +84,15 @@ $ph9_question = array();
 
 // Get the highest, second highest, and third highest mood
 $highestMood = $moodDistributionData[0]['mood'];
-$secondHighestMood = $moodDistributionData[1]['mood'];
-$thirdHighestMood = $moodDistributionData[2]['mood'];
+
 
 // Get the highest, second highest, and third highest symptom
 $highestSymptom = $symptomDistributionData[0]['symptom'];
-$secondHighestSymptom = $symptomDistributionData[1]['symptom'];
-$thirdHighestSymptom = $symptomDistributionData[2]['symptom'];
+
 
 // Get the highest, second highest, and third highest severity
 $highestSeverity = $severityDistributionData[0]['severity'];
-$secondHighestSeverity = $severityDistributionData[1]['severity'];
-$thirdHighestSeverity = $severityDistributionData[2]['severity'];
+
 
 
 $sentence = "You're feeling {$highestMood}, dealing with {$highestSymptom} as your main challenge, and your overall emotional state is {$highestSeverity}.";

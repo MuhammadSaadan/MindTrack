@@ -97,7 +97,7 @@ $conn->close();
 
 <br>
 
-<div class="panel bg-gray-300">
+<div class="panel bg-white-300">
 
 
     <div class="mb-5" x-data="{tab : 'home'}">
