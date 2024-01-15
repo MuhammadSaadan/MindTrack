@@ -133,7 +133,7 @@
     $conn->close();
     ?>
     <div class="flex justify-center items-center min-h-screen"
-        style="background-image: url('/assets/images/bglogin.svg'); background-size: cover; background-position: center;"
+        style="background-image: url('/assets/images/cartonbg.jpg'); background-size: cover; background-position: center;"
         dark:bg-image="url('/assets/images/map-dark.svg')">
 
         <div class="panel sm:w-[480px] m-6 max-w-lg w-full">
@@ -151,10 +151,13 @@
                 </div>
                 <button type="submit" class="btn btn-primary w-full">SIGN IN</button>
             </form>
-            <div
-                class="relative my-7 h-5 text-center before:w-full before:h-[1px] before:absolute before:inset-0 before:m-auto before:bg-[#ebedf2] dark:before:bg-[#253b5c]">
-            </div>
+
+            <br>
+            <p class="text-center"> <a href="/auth/index.php" class="text-primary font-bold hover:underline">Change
+                    User</a></p>
+         
         </div>
+
     </div>
 
     <script>

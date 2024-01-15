@@ -53,41 +53,26 @@ include '../header-main.php';
 ?>
 
 <div>
-    <ul class="flex space-x-2 rtl:space-x-reverse">
-        <li>
-            <a href="javascript:;" class="text-primary hover:underline">Users</a>
+    <ol class="flex text-primary font-semibold dark:text-white-dark">
+        <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"><a href="/dashboardUser/dashboard.php"
+                class="p-1.5 px-3 ltr:pl-6 rtl:pr-6 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70">User
+                Dashboard</a></li>
+
+        <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"><a
+                class="bg-primary text-white-light p-1.5 ltr:pl-6 rtl:pr-6 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary before:z-[1]">Profile
+                Settings</a>
+
         </li>
-        <li class="before:content-['/'] ltr:before:mr-1 rtl:before:ml-1">
-            <span>Account Settings</span>
-        </li>
-    </ul>
+
+
+    </ol>
     <div class="pt-5">
         <div class="flex items-center justify-between mb-5">
-            <h5 class="font-semibold text-lg dark:text-white-light">Settings</h5>
+            
+                <h5 class="font-semibold text-lg dark:text-white-light">Settings</h5>
+            </div>
         </div>
-        <div x-data="{tab: 'home'}">
-            <ul
-                class="sm:flex font-semibold border-b border-[#ebedf2] dark:border-[#191e3a] mb-5 whitespace-nowrap overflow-y-auto">
-                <li class="inline-block">
-                    <a href="javascript:;"
-                        class="flex gap-2 p-4 border-b border-transparent hover:border-primary hover:text-primary"
-                        :class="{'!border-primary text-primary' : tab == 'home'}" @click="tab='home'">
 
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5">
-                            <path opacity="0.5"
-                                d="M2 12.2039C2 9.91549 2 8.77128 2.5192 7.82274C3.0384 6.87421 3.98695 6.28551 5.88403 5.10813L7.88403 3.86687C9.88939 2.62229 10.8921 2 12 2C13.1079 2 14.1106 2.62229 16.116 3.86687L18.116 5.10812C20.0131 6.28551 20.9616 6.87421 21.4808 7.82274C22 8.77128 22 9.91549 22 12.2039V13.725C22 17.6258 22 19.5763 20.8284 20.7881C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.7881C2 19.5763 2 17.6258 2 13.725V12.2039Z"
-                                stroke="currentColor" stroke-width="1.5" />
-                            <path d="M12 15L12 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                        </svg>
-                        Home
-                    </a>
-                </li>
-
-
-
-            </ul>
-            <template x-if="tab === 'home'">
                 <div>
                     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>"
                         class="border border-[#ebedf2] dark:border-[#191e3a] rounded-md p-4 mb-5 bg-white dark:bg-[#0e1726]">
@@ -193,7 +178,7 @@ include '../header-main.php';
 
                 setTimeout(() => {
                     window.location.href = '/auth/signout.php';
-                }, 1500); 
+                }, 1500);
             } else {
                 swalWithBootstrapButtons.fire('Error', 'Failed to delete account', 'error');
             }

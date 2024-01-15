@@ -90,6 +90,9 @@
     </script>
 
     <?php //include 'theme-customizer.php'; ?>
+    <!-- <div class=""
+        style="background-image: url('/assets/images/lightgreen.jpeg'); background-size: cover; background-position: center;"
+        dark:bg-image="url('/assets/images/map-dark.svg')"> -->
 
     <div class="main-container text-black dark:text-white-dark min-h-screen" :class="[$store.app.navbar]">
 

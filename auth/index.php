@@ -40,7 +40,7 @@ $conn->close();
 
 <body>
     <div class="flex flex-col items-center justify-center min-h-screen"
-        style="background-image: url('/assets/images/bglogin.svg'); background-size: cover; background-position: center;"
+        style="background-image: url('/assets/images/cartonbg.jpg'); background-size: cover; background-position: center;"
         dark:bg-image="url('/assets/images/map-dark.svg')">
 
         <h1 class="welcome-heading dark:text-white-light">Welcome to Mindtrack</h1>

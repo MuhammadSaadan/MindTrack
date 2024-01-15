@@ -142,7 +142,7 @@
     $conn->close();
     ?>
     <div class="flex justify-center items-center min-h-screen"
-        style="background-image: url('/assets/images/bglogin.svg'); background-size: cover; background-position: center;"
+        style="background-image: url('/assets/images/cartonbg.jpg'); background-size: cover; background-position: center;"
         dark:bg-image="url('/assets/images/map-dark.svg')">
 
         <div class="panel sm:w-[480px] m-6 max-w-lg w-full">

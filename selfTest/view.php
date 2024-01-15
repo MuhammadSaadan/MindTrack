@@ -1,5 +1,7 @@
 <?php 
 require '../config.php';
+include '../header-main.php'; 
+
 
 
 ?>
@@ -24,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     $logquestion = $_POST['delete_id'];
     
-    $stmt = $conn->prepare("DELETE FROM ph9_questions WHERE id = ?");
+    $stmt = $conn->prepare("DELETE FROM ph9_question WHERE id = ?");
     $stmt->bind_param("i", $logquestion);
     $stmt->execute();
 
@@ -88,7 +90,6 @@ if (isset($_GET['updateSuccess']) && $_GET['updateSuccess'] == 'true') {
 
 }
 
-include '../header-main.php'; 
 
 $conn->close();
 ?>
@@ -130,7 +131,7 @@ $conn->close();
         <td><?= $question['logged_at'] ?></td>
         <td class="p-3 border-b border-[#ebedf2] dark:border-[#191e3a] text-center">
             <div style="display: flex; gap: 10px;">
-                <button type="button" class="btn btn-danger btn-sm" onclick="showAlert(<?= $symptom['log_id'] ?>)">Delete</button>
+                <button type="button" class="btn btn-danger btn-sm" onclick="showAlert(<?= $question['id'] ?>)">Delete</button>
             </div>
         </td>
     </tr>

@@ -75,7 +75,7 @@ include '../dashboardAdmin/header-main.php';
     </li>
     <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]">
         <a class="bg-primary text-white-light p-1.5 ltr:pl-6 rtl:pr-6 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary before:z-[1]">
-            Edit Counselor
+            Edit Counsellor
         </a>
     </li>
 </ol>
@@ -134,7 +134,7 @@ include '../dashboardAdmin/header-main.php';
         <br>
 
         <div class="form-group">
-            <button type="submit" name="update_counselor" class="btn btn-primary">Update Counselor</button>
+            <button type="submit" name="update_counselor" class="btn btn-primary">Update Counsellor</button>
         </div>
     </form>
 </div>

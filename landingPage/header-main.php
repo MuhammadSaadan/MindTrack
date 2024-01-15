@@ -36,6 +36,7 @@
             </path>
         </svg>
     </div>
+    
 
     <div class="fixed bottom-6 ltr:right-6 rtl:left-6 z-50" x-data="scrollToTop">
         <template x-if="showTopButton">
@@ -76,6 +77,7 @@
 
     <?php //include 'theme-customizer.php'; ?>
 
+    <div class="container mx-auto p-4">
 
         <div class="main-content">
             <?php include 'landingPage/header.php'; ?>
