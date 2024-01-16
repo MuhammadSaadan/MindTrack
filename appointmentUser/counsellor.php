@@ -156,11 +156,7 @@ include '../header-main.php';
         if (!empty($availableTimeSlots)) {
             echo "<div class='mb-4'>";
             echo "<h5 style='font-weight: 600;' class='mb-2'>Available Time Slots for $selectedDate:</h5>";
-            echo "<ul>";
-            foreach ($availableTimeSlots as $timeSlot) {
-                echo "<li>$timeSlot</li>";
-            }
-            echo "</ul>";
+      
             echo "</div>";
         }
         ?>

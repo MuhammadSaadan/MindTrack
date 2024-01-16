@@ -22,8 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_profile'])) {
     $stmt->bind_param("sssi", $name, $email, $password, $user_id);
     $stmt->execute();
 
-    header("Location: /users/profile.php");
-    exit();
+    // Add this line to set a session variable for profile update success
+    $_SESSION['update_success'] = true;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
@@ -49,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     }
 }
 include '../header-main.php';
-
 ?>
+
 
 <div>
     <ol class="flex text-primary font-semibold dark:text-white-dark">
@@ -130,6 +130,7 @@ include '../header-main.php';
     </div>
 </div>
 
+
 <script>
 
     async function showAlert(deleteUserId) {
@@ -189,5 +190,34 @@ include '../header-main.php';
     }
 
 </script>
+
+<script defer src='/assets/js/apexcharts.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/sweetalert2@10'></script>
+<script>
+    // Check if the session variable is set and display the success message
+    <?php if (isset($_SESSION['update_success']) && $_SESSION['update_success']) : ?>
+        coloredToast = () => {
+            const toast = window.Swal.mixin({
+                toast: true,
+                position: 'top',
+                showConfirmButton: false,
+                timer: 3000,
+                showCloseButton: true,
+                customClass: {
+                    popup: 'background-color: #5cb85c; color: white; border-radius: 5px;' // Inline styles for green color
+                }
+            });
+            toast.fire({
+                title: 'Profile Updated Successfully',
+                icon: 'success'
+            });
+        };
+        coloredToast();
+    <?php endif; ?>
+
+    // Reset the session variable
+    <?php $_SESSION['update_success'] = false; ?>
+</script>
+
 
 <?php include '../footer-main.php'; ?>

@@ -35,6 +35,18 @@ $conn->close();
             text-align: center;
             margin: 0; /* Reset margin to remove extra spacing */
         }
+
+        /* Adjusted styles for image containers */
+        .py-7 {
+            margin-top: 20px; /* Add margin-top to move the images down */
+        }
+
+        .rounded-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.02);
+        }
     </style>
 </head>
 
@@ -55,9 +67,7 @@ $conn->close();
                 class="card bg-white shadow-[4px_6px_10px_-3px_#bfc9d4] rounded-lg border border-[#e0e6ed] dark:border-[#1b2e4b] dark:bg-[#191e3a] dark:shadow-none transition duration-300 ease-in-out transform">
                 <div class="py-7 px-6">
                     <div class="-mt-7 mb-7 rounded-tl rounded-tr h-[200px] overflow-hidden">
-                        <img src="/assets/images/userprofilepic.png" alt="User Image"
-                            style="width: 100%; height: 100%; object-fit: cover; transform: scale(1.02);"
-                            class="rounded-lg" />
+                        <img src="/assets/images/userprofilepic.png" alt="User Image" class="rounded-lg" />
                     </div>
                     <h5 class="text-[#3b3f5c] text-xl font-semibold mb-4 dark:text-white-light">User</h5>
                     <p class="text-white-dark">Track your mental health today!.</p>
@@ -69,9 +79,7 @@ $conn->close();
                 class="card bg-white shadow-[4px_6px_10px_-3px_#bfc9d4] rounded-lg border border-[#e0e6ed] dark:border-[#1b2e4b] dark:bg-[#191e3a] dark:shadow-none transition duration-300 ease-in-out transform">
                 <div class="py-7 px-6">
                     <div class="-mt-7 mb-7 rounded-tl rounded-tr h-[200px] overflow-hidden">
-                        <img src="/assets/images/user2profilepic.png" alt="Counselor Image"
-                            style="width: 100%; height: 100%; object-fit: cover; transform: scale(1.02);"
-                            class="rounded-lg" />
+                        <img src="/assets/images/user2profilepic.png" alt="Counselor Image" class="rounded-lg" />
                     </div>
                     <h5 class="text-[#3b3f5c] text-xl font-semibold mb-4 dark:text-white-light">Counsellor</h5>
                     <p class="text-white-dark">Assess patient mental health.</p>
